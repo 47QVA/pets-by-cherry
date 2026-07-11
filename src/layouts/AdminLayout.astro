@@ -1,0 +1,67 @@
+---
+import '../styles/tokens.css';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+
+const navItems = [
+  { href: '/admin', label: 'Dashboard' },
+  { href: '/admin/categories', label: 'Categories' },
+  { href: '/admin/pet-types', label: 'Pet types' },
+  { href: '/admin/pets', label: 'Pets' },
+  { href: '/admin/orders', label: 'Orders' }
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="robots" content="noindex" />
+		<title>{title} · Pets by Cherry admin</title>
+	</head>
+	<body class="min-h-screen bg-cream text-ink">
+		<a
+			href="#main-content"
+			class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-sage-deep focus:px-4 focus:py-2 focus:text-cream"
+		>
+			Skip to content
+		</a>
+
+		<div class="flex min-h-screen flex-col sm:flex-row">
+			<nav aria-label="Admin" class="flex shrink-0 flex-col gap-1 border-b border-ink/10 bg-white/60 p-4 sm:w-56 sm:border-b-0 sm:border-r sm:p-6">
+				<a href="/" class="mb-4 font-display text-lg text-sage-deep">Pets by Cherry</a>
+				<p class="mb-2 text-xs uppercase tracking-wide text-ink-soft">Admin</p>
+				{navItems.map((item) => {
+					const active = currentPath === item.href || (item.href !== '/admin' && currentPath.startsWith(item.href));
+					return (
+						<a
+							href={item.href}
+							aria-current={active ? 'page' : undefined}
+							class={`rounded-lg px-3 py-2 text-sm ${active ? 'bg-sage-deep text-cream' : 'text-ink-soft hover:bg-sage/15'}`}
+						>
+							{item.label}
+						</a>
+					);
+				})}
+				<form method="POST" action="/api/admin/logout" class="mt-4">
+					<button type="submit" class="w-full rounded-lg px-3 py-2 text-left text-sm text-ink-soft hover:bg-sage/15">
+						Log out
+					</button>
+				</form>
+			</nav>
+
+			<main id="main-content" class="flex-1 p-4 sm:p-8">
+				<h1 class="mb-6 font-display text-2xl text-ink">{title}</h1>
+				<slot />
+			</main>
+		</div>
+	</body>
+</html>

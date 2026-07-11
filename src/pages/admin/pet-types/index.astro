@@ -1,0 +1,44 @@
+---
+import { env } from 'cloudflare:workers';
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import { getAllPetTypes } from '../../../lib/db';
+
+const petTypes = await getAllPetTypes(env.DB);
+---
+
+<AdminLayout title="Pet types">
+	<a href="/admin/pet-types/new" class="mb-4 inline-block rounded-full bg-sage-deep px-5 py-2.5 text-sm text-cream">
+		New pet type
+	</a>
+
+	{petTypes.length === 0 ? (
+		<p class="text-ink-soft">No pet types yet.</p>
+	) : (
+		<div class="overflow-x-auto rounded-2xl bg-white ring-1 ring-ink/10">
+			<table class="w-full text-left text-sm">
+				<thead>
+					<tr class="border-b border-ink/10 text-ink-soft">
+						<th class="px-4 py-3 font-medium">Category</th>
+						<th class="px-4 py-3 font-medium">Name</th>
+						<th class="px-4 py-3 font-medium">Slug</th>
+						<th class="px-4 py-3 font-medium"></th>
+					</tr>
+				</thead>
+				<tbody>
+					{petTypes.map((petType) => (
+						<tr class="border-b border-ink/5 last:border-0">
+							<td class="px-4 py-3 text-ink-soft">{petType.category_name}</td>
+							<td class="px-4 py-3 text-ink">{petType.name}</td>
+							<td class="px-4 py-3 text-ink-soft">{petType.slug}</td>
+							<td class="px-4 py-3 text-right">
+								<a href={`/admin/pet-types/${petType.id}/edit`} class="text-sage-deep underline">
+									Edit
+								</a>
+							</td>
+						</tr>
+					))}
+				</tbody>
+			</table>
+		</div>
+	)}
+</AdminLayout>

@@ -1,0 +1,47 @@
+---
+import { env } from 'cloudflare:workers';
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import { getAllOrders } from '../../../lib/db';
+import { formatPrice } from '../../../lib/format';
+import type { CartItem } from '../../../lib/cart';
+
+const orders = await getAllOrders(env.DB);
+---
+
+<AdminLayout title="Simulated orders">
+	<p class="mb-4 text-sm text-ink-soft">
+		Read-only feed of demo checkouts. No real payment was ever processed for any of these.
+	</p>
+
+	{orders.length === 0 ? (
+		<p class="text-ink-soft">No simulated orders yet.</p>
+	) : (
+		<div class="overflow-x-auto rounded-2xl bg-white ring-1 ring-ink/10">
+			<table class="w-full text-left text-sm">
+				<thead>
+					<tr class="border-b border-ink/10 text-ink-soft">
+						<th class="px-4 py-3 font-medium">Receipt ref</th>
+						<th class="px-4 py-3 font-medium">Items</th>
+						<th class="px-4 py-3 font-medium">Total</th>
+						<th class="px-4 py-3 font-medium">Delivery address</th>
+						<th class="px-4 py-3 font-medium">Placed</th>
+					</tr>
+				</thead>
+				<tbody>
+					{orders.map((order) => {
+						const items: CartItem[] = JSON.parse(order.items_json);
+						return (
+							<tr class="border-b border-ink/5 last:border-0 align-top">
+								<td class="px-4 py-3 text-ink">{order.fake_receipt_ref}</td>
+								<td class="px-4 py-3 text-ink-soft">{items.map((item) => item.name).join(', ')}</td>
+								<td class="px-4 py-3 text-ink-soft">{formatPrice(order.total_cents)}</td>
+								<td class="px-4 py-3 text-ink-soft">{order.fake_delivery_address}</td>
+								<td class="px-4 py-3 text-ink-soft">{order.created_at}</td>
+							</tr>
+						);
+					})}
+				</tbody>
+			</table>
+		</div>
+	)}
+</AdminLayout>

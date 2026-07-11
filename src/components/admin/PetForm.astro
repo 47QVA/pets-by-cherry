@@ -1,0 +1,149 @@
+---
+import type { Pet, PetTypeWithCategory } from '../../lib/db';
+
+interface Props {
+  action: string;
+  petTypes: PetTypeWithCategory[];
+  pet?: Pet;
+  error?: string;
+}
+
+const { action, petTypes, pet, error } = Astro.props;
+const priceNaira = pet ? (pet.price_cents / 100).toFixed(2) : '';
+---
+
+<form method="POST" action={action} class="max-w-2xl space-y-4">
+	{error && <p class="rounded-xl bg-coral/10 p-3 text-sm text-ink-soft">{error}</p>}
+
+	<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+		<div>
+			<label class="mb-1 block text-sm text-ink-soft" for="name">Name</label>
+			<input
+				id="name"
+				name="name"
+				type="text"
+				required
+				value={pet?.name}
+				class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+			/>
+		</div>
+
+		<div>
+			<label class="mb-1 block text-sm text-ink-soft" for="pet_type_id">Pet type</label>
+			<select
+				id="pet_type_id"
+				name="pet_type_id"
+				required
+				class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+			>
+				{petTypes.map((petType) => (
+					<option value={petType.id} selected={petType.id === pet?.pet_type_id}>
+						{petType.category_name} — {petType.name}
+					</option>
+				))}
+			</select>
+		</div>
+
+		<div>
+			<label class="mb-1 block text-sm text-ink-soft" for="breed">Breed</label>
+			<input
+				id="breed"
+				name="breed"
+				type="text"
+				value={pet?.breed ?? ''}
+				class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+			/>
+		</div>
+
+		<div>
+			<label class="mb-1 block text-sm text-ink-soft" for="sex">Sex</label>
+			<select
+				id="sex"
+				name="sex"
+				class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+			>
+				<option value="" selected={!pet?.sex}>Unspecified</option>
+				<option value="Male" selected={pet?.sex === 'Male'}>Male</option>
+				<option value="Female" selected={pet?.sex === 'Female'}>Female</option>
+			</select>
+		</div>
+
+		<div>
+			<label class="mb-1 block text-sm text-ink-soft" for="age_label">Age</label>
+			<input
+				id="age_label"
+				name="age_label"
+				type="text"
+				placeholder="e.g. 2 years"
+				value={pet?.age_label ?? ''}
+				class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+			/>
+		</div>
+
+		<div>
+			<label class="mb-1 block text-sm text-ink-soft" for="weight_label">Weight</label>
+			<input
+				id="weight_label"
+				name="weight_label"
+				type="text"
+				placeholder="e.g. 12 kg"
+				value={pet?.weight_label ?? ''}
+				class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+			/>
+		</div>
+
+		<div>
+			<label class="mb-1 block text-sm text-ink-soft" for="price">Price (₦)</label>
+			<input
+				id="price"
+				name="price"
+				type="number"
+				step="0.01"
+				min="0"
+				required
+				value={priceNaira}
+				class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+			/>
+		</div>
+
+		<div>
+			<label class="mb-1 block text-sm text-ink-soft" for="photo_url">Photo URL</label>
+			<input
+				id="photo_url"
+				name="photo_url"
+				type="url"
+				value={pet?.photo_url ?? ''}
+				class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+			/>
+		</div>
+	</div>
+
+	<div>
+		<label class="mb-1 block text-sm text-ink-soft" for="description">Description</label>
+		<textarea
+			id="description"
+			name="description"
+			rows={3}
+			class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+		>{pet?.description ?? ''}</textarea>
+	</div>
+
+	<div class="flex flex-wrap gap-6">
+		<label class="flex items-center gap-2 text-sm text-ink-soft">
+			<input type="checkbox" name="vaccinated" value="1" checked={!!pet?.vaccinated} />
+			Vaccinated
+		</label>
+		<label class="flex items-center gap-2 text-sm text-ink-soft">
+			<input type="checkbox" name="featured" value="1" checked={!!pet?.featured} />
+			Featured
+		</label>
+		<label class="flex items-center gap-2 text-sm text-ink-soft">
+			<input type="checkbox" name="in_stock" value="1" checked={pet ? !!pet.in_stock : true} />
+			In stock
+		</label>
+	</div>
+
+	<button type="submit" class="rounded-full bg-sage-deep px-6 py-2.5 text-sm text-cream">
+		{pet ? 'Save changes' : 'Create pet'}
+	</button>
+</form>

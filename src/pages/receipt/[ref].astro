@@ -1,0 +1,77 @@
+---
+import { env } from 'cloudflare:workers';
+import Layout from '../../layouts/Layout.astro';
+import { getOrderByRef } from '../../lib/db';
+import { formatPrice } from '../../lib/format';
+import type { CartItem } from '../../lib/cart';
+
+const { ref } = Astro.params;
+const db = env.DB;
+
+let order: Awaited<ReturnType<typeof getOrderByRef>> = null;
+let loadError = false;
+
+try {
+  order = await getOrderByRef(db, ref!);
+} catch {
+  loadError = true;
+}
+
+if (!loadError && !order) {
+  return Astro.redirect('/404');
+}
+
+const items: CartItem[] = order ? JSON.parse(order.items_json) : [];
+---
+
+<Layout title="Order confirmed">
+	<section class="mx-auto max-w-lg">
+		{loadError && (
+			<p class="rounded-2xl bg-coral/10 p-4 text-ink-soft">
+				Couldn't load this receipt. Try again.
+			</p>
+		)}
+
+		{!loadError && order && (
+			<>
+				<div class="rounded-3xl bg-sage/15 p-6 text-center">
+					<p class="font-display text-2xl text-ink">Order confirmed 🎉</p>
+					<p class="mt-1 text-ink-soft">Demo checkout — no real payment was processed.</p>
+					<p class="mt-4 font-display text-lg text-sage-deep">{order.fake_receipt_ref}</p>
+				</div>
+
+				<ul class="mt-6 space-y-3">
+					{items.map((item) => (
+						<li class="flex items-center gap-4 rounded-2xl bg-cream p-3 ring-1 ring-ink/5">
+							<div class="h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-sage/30">
+								{item.photoUrl && <img src={item.photoUrl} alt={item.name} class="h-full w-full object-cover" />}
+							</div>
+							<div class="flex-1">
+								<p class="text-ink">{item.name}</p>
+							</div>
+							<p class="text-ink-soft">{formatPrice(item.priceCents)}</p>
+						</li>
+					))}
+				</ul>
+
+				<div class="mt-6 flex items-center justify-between border-t border-ink/10 pt-4">
+					<span class="font-display text-lg text-ink">Total paid</span>
+					<span class="font-display text-xl text-coral">{formatPrice(order.total_cents)}</span>
+				</div>
+
+				<div class="mt-6 rounded-2xl bg-sage/10 p-4">
+					<p class="text-sm text-ink-soft">Delivering to</p>
+					<p class="text-ink">{order.fake_delivery_address}</p>
+					<p class="mt-2 text-sm text-ink-soft">Estimated delivery: 3–5 business days.</p>
+				</div>
+
+				<a
+					href="/"
+					class="mt-6 block rounded-full bg-sage-deep px-6 py-4 text-center font-display text-lg text-cream"
+				>
+					Back home
+				</a>
+			</>
+		)}
+	</section>
+</Layout>

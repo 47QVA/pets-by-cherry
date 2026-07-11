@@ -1,0 +1,44 @@
+---
+import { env } from 'cloudflare:workers';
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import { getCategories } from '../../../lib/db';
+
+const categories = await getCategories(env.DB);
+---
+
+<AdminLayout title="Categories">
+	<a href="/admin/categories/new" class="mb-4 inline-block rounded-full bg-sage-deep px-5 py-2.5 text-sm text-cream">
+		New category
+	</a>
+
+	{categories.length === 0 ? (
+		<p class="text-ink-soft">No categories yet.</p>
+	) : (
+		<div class="overflow-x-auto rounded-2xl bg-white ring-1 ring-ink/10">
+			<table class="w-full text-left text-sm">
+				<thead>
+					<tr class="border-b border-ink/10 text-ink-soft">
+						<th class="px-4 py-3 font-medium">Sort</th>
+						<th class="px-4 py-3 font-medium">Name</th>
+						<th class="px-4 py-3 font-medium">Slug</th>
+						<th class="px-4 py-3 font-medium"></th>
+					</tr>
+				</thead>
+				<tbody>
+					{categories.map((category) => (
+						<tr class="border-b border-ink/5 last:border-0">
+							<td class="px-4 py-3 text-ink-soft">{category.sort_order}</td>
+							<td class="px-4 py-3 text-ink">{category.name}</td>
+							<td class="px-4 py-3 text-ink-soft">{category.slug}</td>
+							<td class="px-4 py-3 text-right">
+								<a href={`/admin/categories/${category.id}/edit`} class="text-sage-deep underline">
+									Edit
+								</a>
+							</td>
+						</tr>
+					))}
+				</tbody>
+			</table>
+		</div>
+	)}
+</AdminLayout>

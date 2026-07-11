@@ -1,0 +1,10 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import CategoryForm from '../../../components/admin/CategoryForm.astro';
+
+const error = Astro.url.searchParams.get('error') ?? undefined;
+---
+
+<AdminLayout title="New category">
+	<CategoryForm action="/api/admin/categories" error={error} />
+</AdminLayout>

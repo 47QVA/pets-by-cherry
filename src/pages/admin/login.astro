@@ -1,0 +1,37 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const error = Astro.url.searchParams.get('error');
+---
+
+<Layout title="Admin login">
+	<section class="mx-auto max-w-sm py-10">
+		<h1 class="mb-6 font-display text-3xl text-ink">Admin</h1>
+
+		{error && (
+			<p class="mb-4 rounded-xl bg-coral/10 p-3 text-sm text-ink-soft">
+				Wrong password. Try again.
+			</p>
+		)}
+
+		<form method="POST" action="/api/admin/login" class="space-y-4">
+			<div>
+				<label class="mb-1 block text-sm text-ink-soft" for="password">Password</label>
+				<input
+					id="password"
+					name="password"
+					type="password"
+					required
+					autofocus
+					class="w-full rounded-xl bg-cream px-4 py-3 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+				/>
+			</div>
+			<button
+				type="submit"
+				class="w-full rounded-full bg-sage-deep px-6 py-3 font-display text-lg text-cream"
+			>
+				Log in
+			</button>
+		</form>
+	</section>
+</Layout>

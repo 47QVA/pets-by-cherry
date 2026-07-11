@@ -1,0 +1,57 @@
+---
+import { env } from 'cloudflare:workers';
+import Layout from '../layouts/Layout.astro';
+import CategoryCard from '../components/CategoryCard';
+import { getCategories } from '../lib/db';
+
+const db = env.DB;
+let categories: Awaited<ReturnType<typeof getCategories>> = [];
+let loadError = false;
+
+try {
+  categories = await getCategories(db);
+} catch {
+  loadError = true;
+}
+---
+
+<Layout title="Home">
+	<section class="mx-auto max-w-3xl py-10 text-center sm:py-16">
+		<h1 class="font-display text-4xl leading-tight text-ink sm:text-5xl">
+			Meet your new best friend
+		</h1>
+		<p class="mx-auto mt-4 max-w-xl text-ink-soft">
+			Browse dogs, cats, birds and more. A demo store, real catalog, checkout is
+			fully simulated.
+		</p>
+	</section>
+
+	<section id="categories" class="mx-auto max-w-5xl scroll-mt-6">
+		<h2 class="mb-4 font-display text-2xl text-ink">Meet the family</h2>
+
+		{loadError && (
+			<p class="rounded-2xl bg-coral/10 p-4 text-ink-soft">
+				Couldn't load categories. Try again.
+			</p>
+		)}
+
+		{!loadError && categories.length === 0 && (
+			<p class="rounded-2xl bg-sage/10 p-4 text-ink-soft">
+				No categories yet, check back soon.
+			</p>
+		)}
+
+		{!loadError && categories.length > 0 && (
+			<div class="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6">
+				{categories.map((category, index) => (
+					<CategoryCard
+						name={category.name}
+						slug={category.slug}
+						photoUrl={category.icon_url}
+						index={index}
+					/>
+				))}
+			</div>
+		)}
+	</section>
+</Layout>

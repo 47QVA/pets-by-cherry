@@ -1,0 +1,27 @@
+---
+import { env } from 'cloudflare:workers';
+import AdminLayout from '../../../../layouts/AdminLayout.astro';
+import PetForm from '../../../../components/admin/PetForm.astro';
+import { getPetById, getAllPetTypes } from '../../../../lib/db';
+
+const { id } = Astro.params;
+const [pet, petTypes] = await Promise.all([getPetById(env.DB, Number(id)), getAllPetTypes(env.DB)]);
+
+if (!pet) {
+  return Astro.redirect('/admin/pets');
+}
+
+const error = Astro.url.searchParams.get('error') ?? undefined;
+---
+
+<AdminLayout title={`Edit ${pet.name}`}>
+	<PetForm action={`/api/admin/pets/${pet.id}/update`} petTypes={petTypes} pet={pet} error={error} />
+
+	<div class="mt-8 max-w-2xl border-t border-ink/10 pt-6">
+		<form method="POST" action={`/api/admin/pets/${pet.id}/delete`}>
+			<button type="submit" class="rounded-full bg-coral/10 px-5 py-2 text-sm text-coral">
+				Delete pet
+			</button>
+		</form>
+	</div>
+</AdminLayout>

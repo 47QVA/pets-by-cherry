@@ -1,0 +1,40 @@
+---
+import { env } from 'cloudflare:workers';
+import AdminLayout from '../../../../layouts/AdminLayout.astro';
+import CategoryForm from '../../../../components/admin/CategoryForm.astro';
+import { getCategoryById, countPetTypesInCategory, countPetsInCategory } from '../../../../lib/db';
+
+const { id } = Astro.params;
+const category = await getCategoryById(env.DB, Number(id));
+
+if (!category) {
+  return Astro.redirect('/admin/categories');
+}
+
+const [petTypeCount, petCount] = await Promise.all([
+  countPetTypesInCategory(env.DB, category.id),
+  countPetsInCategory(env.DB, category.id)
+]);
+
+const error = Astro.url.searchParams.get('error') ?? undefined;
+const canDelete = petTypeCount === 0 && petCount === 0;
+---
+
+<AdminLayout title={`Edit ${category.name}`}>
+	<CategoryForm action={`/api/admin/categories/${category.id}/update`} category={category} error={error} />
+
+	<div class="mt-8 max-w-lg border-t border-ink/10 pt-6">
+		{canDelete ? (
+			<form method="POST" action={`/api/admin/categories/${category.id}/delete`}>
+				<button type="submit" class="rounded-full bg-coral/10 px-5 py-2 text-sm text-coral">
+					Delete category
+				</button>
+			</form>
+		) : (
+			<p class="text-sm text-ink-soft">
+				Can't delete: {petTypeCount} pet type(s) and {petCount} pet(s) still reference this category.
+				Move or remove them first.
+			</p>
+		)}
+	</div>
+</AdminLayout>

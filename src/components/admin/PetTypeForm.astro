@@ -1,0 +1,61 @@
+---
+import type { Category, PetType } from '../../lib/db';
+
+interface Props {
+  action: string;
+  categories: Category[];
+  petType?: PetType;
+  error?: string;
+}
+
+const { action, categories, petType, error } = Astro.props;
+---
+
+<form method="POST" action={action} class="max-w-lg space-y-4">
+	{error && <p class="rounded-xl bg-coral/10 p-3 text-sm text-ink-soft">{error}</p>}
+
+	<div>
+		<label class="mb-1 block text-sm text-ink-soft" for="category_id">Category</label>
+		<select
+			id="category_id"
+			name="category_id"
+			required
+			class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+		>
+			{categories.map((category) => (
+				<option value={category.id} selected={category.id === petType?.category_id}>
+					{category.name}
+				</option>
+			))}
+		</select>
+	</div>
+
+	<div>
+		<label class="mb-1 block text-sm text-ink-soft" for="name">Name</label>
+		<input
+			id="name"
+			name="name"
+			type="text"
+			required
+			value={petType?.name}
+			class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+		/>
+	</div>
+
+	<div>
+		<label class="mb-1 block text-sm text-ink-soft" for="slug">
+			Slug <span class="text-ink-soft/70">(leave blank to auto-generate from name)</span>
+		</label>
+		<input
+			id="slug"
+			name="slug"
+			type="text"
+			value={petType?.slug}
+			class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+		/>
+	</div>
+
+	<button type="submit" class="rounded-full bg-sage-deep px-6 py-2.5 text-sm text-cream">
+		{petType ? 'Save changes' : 'Create pet type'}
+	</button>
+</form>

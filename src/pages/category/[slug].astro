@@ -1,0 +1,76 @@
+---
+import { env } from 'cloudflare:workers';
+import Layout from '../../layouts/Layout.astro';
+import PetCard from '../../components/PetCard';
+import { getCategories, getCategoryBySlug, getPetsByCategory } from '../../lib/db';
+
+const { slug } = Astro.params;
+const db = env.DB;
+
+let categories: Awaited<ReturnType<typeof getCategories>> = [];
+let category: Awaited<ReturnType<typeof getCategoryBySlug>> = null;
+let pets: Awaited<ReturnType<typeof getPetsByCategory>> = [];
+let loadError = false;
+
+try {
+  [categories, category] = await Promise.all([getCategories(db), getCategoryBySlug(db, slug!)]);
+  if (category) {
+    pets = await getPetsByCategory(db, slug!);
+  }
+} catch {
+  loadError = true;
+}
+
+if (!loadError && !category) {
+  return Astro.redirect('/404');
+}
+---
+
+<Layout title={category?.name ?? 'Category'}>
+	<section class="mx-auto max-w-5xl">
+		<nav aria-label="Categories" class="mb-6 flex flex-wrap gap-2">
+			{categories.map((c) => (
+				<a
+					href={`/category/${c.slug}`}
+					aria-current={c.slug === slug ? 'page' : undefined}
+					class={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+						c.slug === slug
+							? 'bg-sage-deep text-cream'
+							: 'bg-sage/20 text-ink-soft hover:bg-sage/30'
+					}`}
+				>
+					{c.name}
+				</a>
+			))}
+		</nav>
+
+		<h1 class="mb-6 font-display text-3xl text-ink">{category?.name}</h1>
+
+		{loadError && (
+			<p class="rounded-2xl bg-coral/10 p-4 text-ink-soft">
+				Couldn't load pets. Try again.
+			</p>
+		)}
+
+		{!loadError && pets.length === 0 && (
+			<p class="rounded-2xl bg-sage/10 p-4 text-ink-soft">
+				No pets in this category yet, check back soon.
+			</p>
+		)}
+
+		{!loadError && pets.length > 0 && (
+			<div class="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6">
+				{pets.map((pet, index) => (
+					<PetCard
+						id={pet.id}
+						name={pet.name}
+						breed={pet.breed}
+						priceCents={pet.price_cents}
+						photoUrl={pet.photo_url}
+						index={index}
+					/>
+				))}
+			</div>
+		)}
+	</section>
+</Layout>

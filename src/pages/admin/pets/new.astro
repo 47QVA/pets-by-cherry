@@ -1,0 +1,17 @@
+---
+import { env } from 'cloudflare:workers';
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import PetForm from '../../../components/admin/PetForm.astro';
+import { getAllPetTypes } from '../../../lib/db';
+
+const petTypes = await getAllPetTypes(env.DB);
+const error = Astro.url.searchParams.get('error') ?? undefined;
+---
+
+<AdminLayout title="New pet">
+	{petTypes.length === 0 ? (
+		<p class="text-ink-soft">Create a category and pet type first.</p>
+	) : (
+		<PetForm action="/api/admin/pets" petTypes={petTypes} error={error} />
+	)}
+</AdminLayout>

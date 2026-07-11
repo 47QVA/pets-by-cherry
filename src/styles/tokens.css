@@ -1,0 +1,52 @@
+@import "tailwindcss";
+@import "@fontsource-variable/fredoka";
+@import "@fontsource-variable/inter";
+
+@theme {
+  --color-sage: #a9c98e;
+  --color-sage-deep: #6f9a55;
+  --color-cream: #fbf9f3;
+  --color-paw-brown: #8b5e3c;
+  --color-coral: #f0824a;
+  --color-ink: #22301d;
+  --color-ink-soft: #5c6b54;
+
+  --font-display: 'Fredoka Variable', ui-rounded, sans-serif;
+  --font-body: 'Inter Variable', ui-sans-serif, sans-serif;
+
+  --animate-card-in: card-in 0.5s ease-out both;
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Plain custom properties for non-utility CSS (blob backgrounds, etc.) */
+:root {
+  --sage: #a9c98e;
+  --sage-deep: #6f9a55;
+  --cream: #fbf9f3;
+  --paw-brown: #8b5e3c;
+  --coral: #f0824a;
+  --ink: #22301d;
+  --ink-soft: #5c6b54;
+}
+
+body {
+  background-color: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+
+/* Consistent, visible focus ring across custom-colored buttons/links */
+:focus-visible {
+  outline: 2px solid var(--coral);
+  outline-offset: 2px;
+}

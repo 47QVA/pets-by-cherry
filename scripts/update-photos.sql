@@ -1,0 +1,9 @@
+UPDATE categories SET icon_url = '/images/categories/dogs.jpg' WHERE slug = 'dogs';
+UPDATE categories SET icon_url = '/images/categories/cats.jpg' WHERE slug = 'cats';
+UPDATE categories SET icon_url = '/images/categories/birds.jpg' WHERE slug = 'birds';
+UPDATE pets SET photo_url = '/images/pets/luna.jpg' WHERE name = 'Luna';
+UPDATE pets SET photo_url = '/images/pets/max.jpg' WHERE name = 'Max';
+UPDATE pets SET photo_url = '/images/pets/coco.jpg' WHERE name = 'Coco';
+UPDATE pets SET photo_url = '/images/pets/simba.jpg' WHERE name = 'Simba';
+UPDATE pets SET photo_url = '/images/pets/kiki.jpg' WHERE name = 'Kiki';
+UPDATE pets SET photo_url = '/images/pets/sunny.jpg' WHERE name = 'Sunny';

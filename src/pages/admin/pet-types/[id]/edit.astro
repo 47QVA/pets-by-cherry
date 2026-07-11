@@ -1,0 +1,39 @@
+---
+import { env } from 'cloudflare:workers';
+import AdminLayout from '../../../../layouts/AdminLayout.astro';
+import PetTypeForm from '../../../../components/admin/PetTypeForm.astro';
+import { getPetTypeById, getCategories, countPetsOfType } from '../../../../lib/db';
+
+const { id } = Astro.params;
+const [petType, categories] = await Promise.all([getPetTypeById(env.DB, Number(id)), getCategories(env.DB)]);
+
+if (!petType) {
+  return Astro.redirect('/admin/pet-types');
+}
+
+const petCount = await countPetsOfType(env.DB, petType.id);
+const error = Astro.url.searchParams.get('error') ?? undefined;
+---
+
+<AdminLayout title={`Edit ${petType.name}`}>
+	<PetTypeForm
+		action={`/api/admin/pet-types/${petType.id}/update`}
+		categories={categories}
+		petType={petType}
+		error={error}
+	/>
+
+	<div class="mt-8 max-w-lg border-t border-ink/10 pt-6">
+		{petCount === 0 ? (
+			<form method="POST" action={`/api/admin/pet-types/${petType.id}/delete`}>
+				<button type="submit" class="rounded-full bg-coral/10 px-5 py-2 text-sm text-coral">
+					Delete pet type
+				</button>
+			</form>
+		) : (
+			<p class="text-sm text-ink-soft">
+				Can't delete: {petCount} pet(s) still use this type. Move or remove them first.
+			</p>
+		)}
+	</div>
+</AdminLayout>

@@ -1,0 +1,47 @@
+---
+import { env } from 'cloudflare:workers';
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import { getAllPets } from '../../../lib/db';
+import { formatPrice } from '../../../lib/format';
+
+const pets = await getAllPets(env.DB);
+---
+
+<AdminLayout title="Pets">
+	<a href="/admin/pets/new" class="mb-4 inline-block rounded-full bg-coral px-5 py-2.5 text-sm text-cream">
+		New pet
+	</a>
+
+	{pets.length === 0 ? (
+		<p class="text-ink-soft">No pets yet.</p>
+	) : (
+		<div class="overflow-x-auto rounded-2xl bg-white ring-1 ring-ink/10">
+			<table class="w-full text-left text-sm">
+				<thead>
+					<tr class="border-b border-ink/10 text-ink-soft">
+						<th class="px-4 py-3 font-medium">Name</th>
+						<th class="px-4 py-3 font-medium">Price</th>
+						<th class="px-4 py-3 font-medium">Featured</th>
+						<th class="px-4 py-3 font-medium">In stock</th>
+						<th class="px-4 py-3 font-medium"></th>
+					</tr>
+				</thead>
+				<tbody>
+					{pets.map((pet) => (
+						<tr class="border-b border-ink/5 last:border-0">
+							<td class="px-4 py-3 text-ink">{pet.name}</td>
+							<td class="px-4 py-3 text-ink-soft">{formatPrice(pet.price_cents)}</td>
+							<td class="px-4 py-3 text-ink-soft">{pet.featured ? 'Yes' : '—'}</td>
+							<td class="px-4 py-3 text-ink-soft">{pet.in_stock ? 'Yes' : 'No'}</td>
+							<td class="px-4 py-3 text-right">
+								<a href={`/admin/pets/${pet.id}/edit`} class="text-sage-deep underline">
+									Edit
+								</a>
+							</td>
+						</tr>
+					))}
+				</tbody>
+			</table>
+		</div>
+	)}
+</AdminLayout>
