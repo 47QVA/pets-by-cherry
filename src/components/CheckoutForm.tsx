@@ -30,7 +30,7 @@ export default function CheckoutForm() {
 
   if (items.length === 0) {
     return (
-      <div class="rounded-2xl bg-sage/10 p-8 text-center">
+      <div class="rounded-2xl bg-white ring-1 ring-ink/10 p-8 text-center">
         <p class="text-ink-soft">Your cart is empty, so there's nothing to check out.</p>
         <a href="/" class="mt-4 inline-block rounded-full bg-sage-deep px-6 py-3 font-medium text-cream">
           Browse pets
@@ -154,7 +154,7 @@ export default function CheckoutForm() {
 
   return (
     <div>
-      <div class="mb-6 rounded-2xl bg-sage/10 p-4">
+      <div class="mb-6 rounded-2xl bg-white ring-1 ring-ink/10 p-4">
         <p class="text-sm text-ink-soft">Delivering to</p>
         <p class="text-ink">
           {delivery.name} · {delivery.phone}

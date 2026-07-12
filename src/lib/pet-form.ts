@@ -18,6 +18,8 @@ export async function parsePetForm(db: D1Database, form: FormData): Promise<PetI
     return { error: 'Select a valid pet type.' };
   }
 
+  const stockCount = Number(form.get('stock_count') ?? 1);
+
   return {
     name,
     categoryId: petType.category_id,
@@ -31,6 +33,7 @@ export async function parsePetForm(db: D1Database, form: FormData): Promise<PetI
     description: String(form.get('description') ?? '').trim() || null,
     photoUrl: String(form.get('photo_url') ?? '').trim() || null,
     featured: form.get('featured') === '1',
-    inStock: form.get('in_stock') === '1'
+    inStock: form.get('in_stock') === '1',
+    stockCount: Number.isFinite(stockCount) && stockCount >= 0 ? stockCount : 1
   };
 }

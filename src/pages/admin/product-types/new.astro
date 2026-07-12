@@ -1,0 +1,17 @@
+---
+import { env } from 'cloudflare:workers';
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import ProductTypeForm from '../../../components/admin/ProductTypeForm.astro';
+import { getCategories } from '../../../lib/db';
+
+const categories = await getCategories(env.DB);
+const error = Astro.url.searchParams.get('error') ?? undefined;
+---
+
+<AdminLayout title="New product type">
+	{categories.length === 0 ? (
+		<p class="text-ink-soft">Create a category first.</p>
+	) : (
+		<ProductTypeForm action="/api/admin/product-types" categories={categories} error={error} />
+	)}
+</AdminLayout>

@@ -1,0 +1,42 @@
+---
+import { env } from 'cloudflare:workers';
+import AdminLayout from '../../../../layouts/AdminLayout.astro';
+import ProductTypeForm from '../../../../components/admin/ProductTypeForm.astro';
+import { getProductTypeById, getCategories, countProductsOfType } from '../../../../lib/db';
+
+const { id } = Astro.params;
+const [productType, categories] = await Promise.all([
+  getProductTypeById(env.DB, Number(id)),
+  getCategories(env.DB)
+]);
+
+if (!productType) {
+  return Astro.redirect('/admin/product-types');
+}
+
+const productCount = await countProductsOfType(env.DB, productType.id);
+const error = Astro.url.searchParams.get('error') ?? undefined;
+---
+
+<AdminLayout title={`Edit ${productType.name}`}>
+	<ProductTypeForm
+		action={`/api/admin/product-types/${productType.id}/update`}
+		categories={categories}
+		productType={productType}
+		error={error}
+	/>
+
+	<div class="mt-8 max-w-lg border-t border-ink/10 pt-6">
+		{productCount === 0 ? (
+			<form method="POST" action={`/api/admin/product-types/${productType.id}/delete`}>
+				<button type="submit" class="rounded-full bg-coral/10 px-5 py-2 text-sm text-coral">
+					Delete product type
+				</button>
+			</form>
+		) : (
+			<p class="text-sm text-ink-soft">
+				Can't delete: {productCount} product(s) still use this type. Move or remove them first.
+			</p>
+		)}
+	</div>
+</AdminLayout>

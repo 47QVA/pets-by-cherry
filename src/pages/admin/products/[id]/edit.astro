@@ -1,0 +1,35 @@
+---
+import { env } from 'cloudflare:workers';
+import AdminLayout from '../../../../layouts/AdminLayout.astro';
+import ProductForm from '../../../../components/admin/ProductForm.astro';
+import { getProductById, getAllProductTypes } from '../../../../lib/db';
+
+const { id } = Astro.params;
+const [product, productTypes] = await Promise.all([
+  getProductById(env.DB, Number(id)),
+  getAllProductTypes(env.DB)
+]);
+
+if (!product) {
+  return Astro.redirect('/admin/products');
+}
+
+const error = Astro.url.searchParams.get('error') ?? undefined;
+---
+
+<AdminLayout title={`Edit ${product.name}`}>
+	<ProductForm
+		action={`/api/admin/products/${product.id}/update`}
+		productTypes={productTypes}
+		product={product}
+		error={error}
+	/>
+
+	<div class="mt-8 max-w-2xl border-t border-ink/10 pt-6">
+		<form method="POST" action={`/api/admin/products/${product.id}/delete`}>
+			<button type="submit" class="rounded-full bg-coral/10 px-5 py-2 text-sm text-coral">
+				Delete product
+			</button>
+		</form>
+	</div>
+</AdminLayout>

@@ -28,6 +28,7 @@ export interface Pet {
   photo_url: string | null;
   featured: number;
   in_stock: number;
+  stock_count: number;
   created_at: string;
 }
 
@@ -177,6 +178,7 @@ export interface PetInput {
   photoUrl: string | null;
   featured: boolean;
   inStock: boolean;
+  stockCount: number;
 }
 
 export async function createPet(db: D1Database, input: PetInput): Promise<void> {
@@ -184,8 +186,8 @@ export async function createPet(db: D1Database, input: PetInput): Promise<void> 
     .prepare(
       `INSERT INTO pets (
         name, category_id, pet_type_id, breed, sex, age_label, weight_label,
-        vaccinated, price_cents, description, photo_url, featured, in_stock
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+        vaccinated, price_cents, description, photo_url, featured, in_stock, stock_count
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     )
     .bind(
       input.name,
@@ -200,7 +202,8 @@ export async function createPet(db: D1Database, input: PetInput): Promise<void> 
       input.description,
       input.photoUrl,
       input.featured ? 1 : 0,
-      input.inStock ? 1 : 0
+      input.inStock ? 1 : 0,
+      input.stockCount
     )
     .run();
 }
@@ -211,7 +214,7 @@ export async function updatePet(db: D1Database, id: number, input: PetInput): Pr
       `UPDATE pets SET
         name = ?, category_id = ?, pet_type_id = ?, breed = ?, sex = ?,
         age_label = ?, weight_label = ?, vaccinated = ?, price_cents = ?,
-        description = ?, photo_url = ?, featured = ?, in_stock = ?
+        description = ?, photo_url = ?, featured = ?, in_stock = ?, stock_count = ?
        WHERE id = ?`
     )
     .bind(
@@ -228,13 +231,204 @@ export async function updatePet(db: D1Database, id: number, input: PetInput): Pr
       input.photoUrl,
       input.featured ? 1 : 0,
       input.inStock ? 1 : 0,
+      input.stockCount,
       id
     )
     .run();
 }
 
+export async function decrementPetStock(db: D1Database, id: number, quantity: number): Promise<void> {
+  await db
+    .prepare(
+      `UPDATE pets SET
+        stock_count = MAX(stock_count - ?, 0),
+        in_stock = CASE WHEN stock_count - ? <= 0 THEN 0 ELSE in_stock END
+       WHERE id = ?`
+    )
+    .bind(quantity, quantity, id)
+    .run();
+}
+
 export async function deletePet(db: D1Database, id: number): Promise<void> {
   await db.prepare('DELETE FROM pets WHERE id = ?').bind(id).run();
+}
+
+export interface ProductType {
+  id: number;
+  category_id: number;
+  name: string;
+  slug: string;
+}
+
+export interface ProductTypeWithCategory extends ProductType {
+  category_name: string;
+}
+
+export function getAllProductTypes(db: D1Database): Promise<ProductTypeWithCategory[]> {
+  return db
+    .prepare(
+      `SELECT product_types.*, categories.name AS category_name
+       FROM product_types
+       JOIN categories ON categories.id = product_types.category_id
+       ORDER BY categories.sort_order ASC, product_types.name ASC`
+    )
+    .all<ProductTypeWithCategory>()
+    .then((result) => result.results);
+}
+
+export function getProductTypeById(db: D1Database, id: number): Promise<ProductType | null> {
+  return db.prepare('SELECT * FROM product_types WHERE id = ?').bind(id).first<ProductType>();
+}
+
+export interface ProductTypeInput {
+  categoryId: number;
+  name: string;
+  slug: string;
+}
+
+export async function createProductType(db: D1Database, input: ProductTypeInput): Promise<void> {
+  await db
+    .prepare('INSERT INTO product_types (category_id, name, slug) VALUES (?, ?, ?)')
+    .bind(input.categoryId, input.name, input.slug)
+    .run();
+}
+
+export async function updateProductType(db: D1Database, id: number, input: ProductTypeInput): Promise<void> {
+  await db
+    .prepare('UPDATE product_types SET category_id = ?, name = ?, slug = ? WHERE id = ?')
+    .bind(input.categoryId, input.name, input.slug, id)
+    .run();
+}
+
+export async function deleteProductType(db: D1Database, id: number): Promise<void> {
+  await db.prepare('DELETE FROM product_types WHERE id = ?').bind(id).run();
+}
+
+export function countProductsOfType(db: D1Database, productTypeId: number): Promise<number> {
+  return db
+    .prepare('SELECT COUNT(*) AS count FROM products WHERE product_type_id = ?')
+    .bind(productTypeId)
+    .first<{ count: number }>()
+    .then((row) => row?.count ?? 0);
+}
+
+export function countProductsInCategory(db: D1Database, categoryId: number): Promise<number> {
+  return db
+    .prepare('SELECT COUNT(*) AS count FROM products WHERE category_id = ?')
+    .bind(categoryId)
+    .first<{ count: number }>()
+    .then((row) => row?.count ?? 0);
+}
+
+export interface Product {
+  id: number;
+  name: string;
+  category_id: number;
+  product_type_id: number;
+  price_cents: number;
+  description: string | null;
+  photo_url: string | null;
+  stock_count: number;
+  featured: number;
+  in_stock: number;
+  created_at: string;
+}
+
+export function getAllProducts(db: D1Database): Promise<Product[]> {
+  return db
+    .prepare('SELECT * FROM products ORDER BY created_at DESC')
+    .all<Product>()
+    .then((result) => result.results);
+}
+
+export function getProductsByCategory(db: D1Database, categorySlug: string): Promise<Product[]> {
+  return db
+    .prepare(
+      `SELECT products.* FROM products
+       JOIN categories ON categories.id = products.category_id
+       WHERE categories.slug = ? AND products.in_stock = 1
+       ORDER BY products.featured DESC, products.created_at DESC`
+    )
+    .bind(categorySlug)
+    .all<Product>()
+    .then((result) => result.results);
+}
+
+export function getProductById(db: D1Database, id: number): Promise<Product | null> {
+  return db.prepare('SELECT * FROM products WHERE id = ?').bind(id).first<Product>();
+}
+
+export interface ProductInput {
+  name: string;
+  categoryId: number;
+  productTypeId: number;
+  priceCents: number;
+  description: string | null;
+  photoUrl: string | null;
+  stockCount: number;
+  featured: boolean;
+  inStock: boolean;
+}
+
+export async function createProduct(db: D1Database, input: ProductInput): Promise<void> {
+  await db
+    .prepare(
+      `INSERT INTO products (
+        name, category_id, product_type_id, price_cents, description, photo_url,
+        stock_count, featured, in_stock
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    )
+    .bind(
+      input.name,
+      input.categoryId,
+      input.productTypeId,
+      input.priceCents,
+      input.description,
+      input.photoUrl,
+      input.stockCount,
+      input.featured ? 1 : 0,
+      input.inStock ? 1 : 0
+    )
+    .run();
+}
+
+export async function updateProduct(db: D1Database, id: number, input: ProductInput): Promise<void> {
+  await db
+    .prepare(
+      `UPDATE products SET
+        name = ?, category_id = ?, product_type_id = ?, price_cents = ?, description = ?,
+        photo_url = ?, stock_count = ?, featured = ?, in_stock = ?
+       WHERE id = ?`
+    )
+    .bind(
+      input.name,
+      input.categoryId,
+      input.productTypeId,
+      input.priceCents,
+      input.description,
+      input.photoUrl,
+      input.stockCount,
+      input.featured ? 1 : 0,
+      input.inStock ? 1 : 0,
+      id
+    )
+    .run();
+}
+
+export async function deleteProduct(db: D1Database, id: number): Promise<void> {
+  await db.prepare('DELETE FROM products WHERE id = ?').bind(id).run();
+}
+
+export async function decrementProductStock(db: D1Database, id: number, quantity: number): Promise<void> {
+  await db
+    .prepare(
+      `UPDATE products SET
+        stock_count = MAX(stock_count - ?, 0),
+        in_stock = CASE WHEN stock_count - ? <= 0 THEN 0 ELSE in_stock END
+       WHERE id = ?`
+    )
+    .bind(quantity, quantity, id)
+    .run();
 }
 
 export interface DemoOrder {
@@ -273,21 +467,32 @@ export function getAllOrders(db: D1Database): Promise<DemoOrder[]> {
 export interface AdminCounts {
   categories: number;
   pets: number;
+  products: number;
   ordersToday: number;
+  lowStockCount: number;
 }
 
 export async function getAdminCounts(db: D1Database): Promise<AdminCounts> {
-  const [categories, pets, ordersToday] = await Promise.all([
+  const [categories, pets, products, ordersToday, lowStock] = await Promise.all([
     db.prepare('SELECT COUNT(*) AS count FROM categories').first<{ count: number }>(),
     db.prepare('SELECT COUNT(*) AS count FROM pets').first<{ count: number }>(),
+    db.prepare('SELECT COUNT(*) AS count FROM products').first<{ count: number }>(),
     db
       .prepare("SELECT COUNT(*) AS count FROM demo_orders WHERE date(created_at) = date('now')")
+      .first<{ count: number }>(),
+    // Pets are unique individual animals (normally stock_count = 1), so a
+    // low threshold isn't a meaningful signal for them the way it is for
+    // products with real quantities -- only products are counted here.
+    db
+      .prepare('SELECT COUNT(*) AS count FROM products WHERE in_stock = 1 AND stock_count <= 2')
       .first<{ count: number }>()
   ]);
 
   return {
     categories: categories?.count ?? 0,
     pets: pets?.count ?? 0,
-    ordersToday: ordersToday?.count ?? 0
+    products: products?.count ?? 0,
+    ordersToday: ordersToday?.count ?? 0,
+    lowStockCount: lowStock?.count ?? 0
   };
 }

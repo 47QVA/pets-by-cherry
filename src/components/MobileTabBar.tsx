@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'preact/hooks';
-import { getCart, onCartChange } from '../lib/cart';
+import { getCart, getCartItemCount, onCartChange } from '../lib/cart';
 
 interface MobileTabBarProps {
   currentPath: string;
@@ -9,7 +9,7 @@ export default function MobileTabBar({ currentPath }: MobileTabBarProps) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    const sync = () => setCount(getCart().length);
+    const sync = () => setCount(getCartItemCount(getCart()));
     sync();
     return onCartChange(sync);
   }, []);

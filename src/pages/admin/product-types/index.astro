@@ -1,0 +1,44 @@
+---
+import { env } from 'cloudflare:workers';
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import { getAllProductTypes } from '../../../lib/db';
+
+const productTypes = await getAllProductTypes(env.DB);
+---
+
+<AdminLayout title="Product types">
+	<a href="/admin/product-types/new" class="mb-4 inline-block rounded-full bg-sage-deep px-5 py-2.5 text-sm text-cream">
+		New product type
+	</a>
+
+	{productTypes.length === 0 ? (
+		<p class="text-ink-soft">No product types yet.</p>
+	) : (
+		<div class="overflow-x-auto rounded-2xl bg-white ring-1 ring-ink/10">
+			<table class="w-full text-left text-sm">
+				<thead>
+					<tr class="border-b border-ink/10 text-ink-soft">
+						<th class="px-4 py-3 font-medium">Category</th>
+						<th class="px-4 py-3 font-medium">Name</th>
+						<th class="px-4 py-3 font-medium">Slug</th>
+						<th class="px-4 py-3 font-medium"></th>
+					</tr>
+				</thead>
+				<tbody>
+					{productTypes.map((productType) => (
+						<tr class="border-b border-ink/5 last:border-0">
+							<td class="px-4 py-3 text-ink-soft">{productType.category_name}</td>
+							<td class="px-4 py-3 text-ink">{productType.name}</td>
+							<td class="px-4 py-3 text-ink-soft">{productType.slug}</td>
+							<td class="px-4 py-3 text-right">
+								<a href={`/admin/product-types/${productType.id}/edit`} class="text-sage-deep underline">
+									Edit
+								</a>
+							</td>
+						</tr>
+					))}
+				</tbody>
+			</table>
+		</div>
+	)}
+</AdminLayout>

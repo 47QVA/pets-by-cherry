@@ -34,7 +34,7 @@ const items: CartItem[] = order ? JSON.parse(order.items_json) : [];
 
 		{!loadError && order && (
 			<>
-				<div class="rounded-3xl bg-sage/15 p-6 text-center">
+				<div class="rounded-3xl bg-sage/10 p-6 text-center">
 					<p class="font-display text-2xl text-ink">Order confirmed 🎉</p>
 					<p class="mt-1 text-ink-soft">Demo checkout — no real payment was processed.</p>
 					<p class="mt-4 font-display text-lg text-sage-deep">{order.fake_receipt_ref}</p>
@@ -48,8 +48,9 @@ const items: CartItem[] = order ? JSON.parse(order.items_json) : [];
 							</div>
 							<div class="flex-1">
 								<p class="text-ink">{item.name}</p>
+								{item.quantity > 1 && <p class="text-sm text-ink-soft">Qty {item.quantity}</p>}
 							</div>
-							<p class="text-ink-soft">{formatPrice(item.priceCents)}</p>
+							<p class="text-ink-soft">{formatPrice(item.priceCents * item.quantity)}</p>
 						</li>
 					))}
 				</ul>
@@ -59,7 +60,7 @@ const items: CartItem[] = order ? JSON.parse(order.items_json) : [];
 					<span class="font-display text-xl text-coral">{formatPrice(order.total_cents)}</span>
 				</div>
 
-				<div class="mt-6 rounded-2xl bg-sage/10 p-4">
+				<div class="mt-6 rounded-2xl bg-white p-4 ring-1 ring-ink/10">
 					<p class="text-sm text-ink-soft">Delivering to</p>
 					<p class="text-ink">{order.fake_delivery_address}</p>
 					<p class="mt-2 text-sm text-ink-soft">Estimated delivery: 3–5 business days.</p>

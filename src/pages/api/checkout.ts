@@ -1,6 +1,12 @@
 import type { APIRoute } from 'astro';
 import { env } from 'cloudflare:workers';
-import { createDemoOrder } from '../../lib/db';
+import {
+  createDemoOrder,
+  decrementPetStock,
+  decrementProductStock,
+  getPetById,
+  getProductById
+} from '../../lib/db';
 import type { CartItem } from '../../lib/cart';
 
 interface CheckoutPayload {
@@ -36,7 +42,21 @@ export const POST: APIRoute = async ({ request }) => {
     return new Response(JSON.stringify({ error: 'Delivery details are incomplete.' }), { status: 400 });
   }
 
-  const totalCents = items.reduce((sum, item) => sum + item.priceCents, 0);
+  // Re-check stock against the database (not the client's cart snapshot) so two
+  // shoppers can't both "win" the last unit of something.
+  for (const item of items) {
+    const record =
+      item.kind === 'pet' ? await getPetById(env.DB, item.id) : await getProductById(env.DB, item.id);
+
+    if (!record || !record.in_stock || record.stock_count < item.quantity) {
+      return new Response(
+        JSON.stringify({ error: `${item.name} no longer has enough stock. Update your cart and try again.` }),
+        { status: 409 }
+      );
+    }
+  }
+
+  const totalCents = items.reduce((sum, item) => sum + item.priceCents * item.quantity, 0);
   const receiptRef = makeReceiptRef();
   const deliveryAddress = `${delivery.name}, ${delivery.phone} — ${delivery.address}, ${delivery.state}`;
 
@@ -47,6 +67,14 @@ export const POST: APIRoute = async ({ request }) => {
       deliveryAddress,
       receiptRef
     });
+
+    for (const item of items) {
+      if (item.kind === 'pet') {
+        await decrementPetStock(env.DB, item.id, item.quantity);
+      } else {
+        await decrementProductStock(env.DB, item.id, item.quantity);
+      }
+    }
   } catch {
     return new Response(JSON.stringify({ error: "Couldn't complete checkout. Try again." }), { status: 500 });
   }

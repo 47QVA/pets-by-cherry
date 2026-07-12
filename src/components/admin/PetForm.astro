@@ -116,6 +116,19 @@ const priceNaira = pet ? (pet.price_cents / 100).toFixed(2) : '';
 				class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
 			/>
 		</div>
+
+		<div>
+			<label class="mb-1 block text-sm text-ink-soft" for="stock_count">Stock on hand</label>
+			<input
+				id="stock_count"
+				name="stock_count"
+				type="number"
+				min="0"
+				required
+				value={pet?.stock_count ?? 1}
+				class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+			/>
+		</div>
 	</div>
 
 	<div>

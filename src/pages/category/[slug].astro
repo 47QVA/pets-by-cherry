@@ -2,7 +2,8 @@
 import { env } from 'cloudflare:workers';
 import Layout from '../../layouts/Layout.astro';
 import PetCard from '../../components/PetCard';
-import { getCategories, getCategoryBySlug, getPetsByCategory } from '../../lib/db';
+import ProductCard from '../../components/ProductCard';
+import { getCategories, getCategoryBySlug, getPetsByCategory, getProductsByCategory } from '../../lib/db';
 
 const { slug } = Astro.params;
 const db = env.DB;
@@ -10,12 +11,13 @@ const db = env.DB;
 let categories: Awaited<ReturnType<typeof getCategories>> = [];
 let category: Awaited<ReturnType<typeof getCategoryBySlug>> = null;
 let pets: Awaited<ReturnType<typeof getPetsByCategory>> = [];
+let products: Awaited<ReturnType<typeof getProductsByCategory>> = [];
 let loadError = false;
 
 try {
   [categories, category] = await Promise.all([getCategories(db), getCategoryBySlug(db, slug!)]);
   if (category) {
-    pets = await getPetsByCategory(db, slug!);
+    [pets, products] = await Promise.all([getPetsByCategory(db, slug!), getProductsByCategory(db, slug!)]);
   }
 } catch {
   loadError = true;
@@ -36,7 +38,7 @@ if (!loadError && !category) {
 					class={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
 						c.slug === slug
 							? 'bg-sage-deep text-cream'
-							: 'bg-sage/20 text-ink-soft hover:bg-sage/30'
+							: 'bg-white text-ink-soft ring-1 ring-ink/10 hover:bg-sage/10'
 					}`}
 				>
 					{c.name}
@@ -48,12 +50,12 @@ if (!loadError && !category) {
 
 		{loadError && (
 			<p class="rounded-2xl bg-coral/10 p-4 text-ink-soft">
-				Couldn't load pets. Try again.
+				Couldn't load this category. Try again.
 			</p>
 		)}
 
 		{!loadError && pets.length === 0 && (
-			<p class="rounded-2xl bg-sage/10 p-4 text-ink-soft">
+			<p class="rounded-2xl bg-white p-4 text-ink-soft ring-1 ring-ink/10">
 				No pets in this category yet, check back soon.
 			</p>
 		)}
@@ -70,6 +72,25 @@ if (!loadError && !category) {
 						index={index}
 					/>
 				))}
+			</div>
+		)}
+
+		{!loadError && products.length > 0 && (
+			<div class="mt-10">
+				<h2 class="mb-4 font-display text-2xl text-ink">Shop for {category?.name}</h2>
+				<div class="grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-6">
+					{products.map((product, index) => (
+						<ProductCard
+							client:load
+							id={product.id}
+							name={product.name}
+							priceCents={product.price_cents}
+							photoUrl={product.photo_url}
+							stockCount={product.stock_count}
+							index={index}
+						/>
+					))}
+				</div>
 			</div>
 		)}
 	</section>

@@ -36,13 +36,13 @@ try {
 		)}
 
 		{!loadError && categories.length === 0 && (
-			<p class="rounded-2xl bg-sage/10 p-4 text-ink-soft">
+			<p class="rounded-2xl bg-white p-4 text-ink-soft ring-1 ring-ink/10">
 				No categories yet, check back soon.
 			</p>
 		)}
 
 		{!loadError && categories.length > 0 && (
-			<div class="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6">
+			<div class="grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-6">
 				{categories.map((category, index) => (
 					<CategoryCard
 						name={category.name}

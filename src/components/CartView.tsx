@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'preact/hooks';
-import { getCart, getCartTotal, onCartChange, removeFromCart, type CartItem } from '../lib/cart';
+import { getCart, getCartTotal, onCartChange, removeFromCart, setQuantity, type CartItem } from '../lib/cart';
 import { formatPrice } from '../lib/format';
 
 export default function CartView() {
@@ -17,7 +17,7 @@ export default function CartView() {
 
   if (items.length === 0) {
     return (
-      <div class="rounded-2xl bg-sage/10 p-8 text-center">
+      <div class="rounded-2xl bg-white ring-1 ring-ink/10 p-8 text-center">
         <p class="text-ink-soft">Your cart is empty.</p>
         <a href="/" class="mt-4 inline-block rounded-full bg-sage-deep px-6 py-3 font-medium text-cream">
           Browse pets
@@ -30,7 +30,7 @@ export default function CartView() {
     <div>
       <ul class="space-y-3">
         {items.map((item) => (
-          <li key={item.petId} class="flex items-center gap-4 rounded-2xl bg-cream p-3 ring-1 ring-ink/5">
+          <li key={`${item.kind}-${item.id}`} class="flex items-center gap-4 rounded-2xl bg-cream p-3 ring-1 ring-ink/5">
             <div class="h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-sage/30">
               {item.photoUrl && <img src={item.photoUrl} alt={item.name} class="h-full w-full object-cover" />}
             </div>
@@ -38,14 +38,37 @@ export default function CartView() {
               <p class="font-display text-lg text-ink">{item.name}</p>
               <p class="text-sm text-ink-soft">{formatPrice(item.priceCents)}</p>
             </div>
-            <button
-              type="button"
-              onClick={() => removeFromCart(item.petId)}
-              aria-label={`Remove ${item.name} from cart`}
-              class="text-ink-soft underline"
-            >
-              Remove
-            </button>
+
+            {item.kind === 'product' ? (
+              <div class="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setQuantity(item.kind, item.id, item.quantity - 1)}
+                  aria-label={`Decrease quantity of ${item.name}`}
+                  class="flex h-7 w-7 items-center justify-center rounded-full bg-white text-ink ring-1 ring-ink/10"
+                >
+                  −
+                </button>
+                <span class="w-5 text-center text-ink">{item.quantity}</span>
+                <button
+                  type="button"
+                  onClick={() => setQuantity(item.kind, item.id, item.quantity + 1)}
+                  aria-label={`Increase quantity of ${item.name}`}
+                  class="flex h-7 w-7 items-center justify-center rounded-full bg-white text-ink ring-1 ring-ink/10"
+                >
+                  +
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => removeFromCart(item.kind, item.id)}
+                aria-label={`Remove ${item.name} from cart`}
+                class="text-ink-soft underline"
+              >
+                Remove
+              </button>
+            )}
           </li>
         ))}
       </ul>

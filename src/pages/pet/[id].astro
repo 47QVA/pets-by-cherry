@@ -41,7 +41,7 @@ const facts = pet
 
 		{!loadError && pet && (
 			<>
-				<div class="overflow-hidden rounded-3xl bg-sage/20">
+				<div class="overflow-hidden rounded-3xl bg-white ring-1 ring-ink/10">
 					{pet.photo_url ? (
 						<img src={pet.photo_url} alt={pet.name} class="aspect-square w-full object-cover sm:aspect-video" />
 					) : (
@@ -61,7 +61,7 @@ const facts = pet
 
 				<div class="mt-5 flex flex-wrap gap-2">
 					{facts.map((fact: any) => (
-						<span class="rounded-full bg-sage/15 px-4 py-2 text-sm text-ink-soft">
+						<span class="rounded-full bg-white px-4 py-2 text-sm text-ink-soft ring-1 ring-ink/10">
 							<strong class="text-ink">{fact.label}:</strong> {fact.value}
 						</span>
 					))}
@@ -71,13 +71,20 @@ const facts = pet
 					<p class="mt-6 leading-relaxed text-ink-soft">{pet.description}</p>
 				)}
 
-				<AddToCartButtons
-					client:load
-					petId={pet.id}
-					name={pet.name}
-					priceCents={pet.price_cents}
-					photoUrl={pet.photo_url}
-				/>
+				{pet.in_stock && pet.stock_count > 0 ? (
+					<AddToCartButtons
+						client:load
+						kind="pet"
+						id={pet.id}
+						name={pet.name}
+						priceCents={pet.price_cents}
+						photoUrl={pet.photo_url}
+					/>
+				) : (
+					<p class="mt-8 rounded-full bg-white px-6 py-4 text-center text-ink-soft ring-1 ring-ink/10">
+						No longer available
+					</p>
+				)}
 			</>
 		)}
 	</section>

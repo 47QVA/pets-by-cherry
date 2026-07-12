@@ -1,0 +1,110 @@
+---
+import type { Product, ProductTypeWithCategory } from '../../lib/db';
+
+interface Props {
+  action: string;
+  productTypes: ProductTypeWithCategory[];
+  product?: Product;
+  error?: string;
+}
+
+const { action, productTypes, product, error } = Astro.props;
+const priceNaira = product ? (product.price_cents / 100).toFixed(2) : '';
+---
+
+<form method="POST" action={action} class="max-w-2xl space-y-4">
+	{error && <p class="rounded-xl bg-coral/10 p-3 text-sm text-ink-soft">{error}</p>}
+
+	<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+		<div>
+			<label class="mb-1 block text-sm text-ink-soft" for="name">Name</label>
+			<input
+				id="name"
+				name="name"
+				type="text"
+				required
+				value={product?.name}
+				class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+			/>
+		</div>
+
+		<div>
+			<label class="mb-1 block text-sm text-ink-soft" for="product_type_id">Type</label>
+			<select
+				id="product_type_id"
+				name="product_type_id"
+				required
+				class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+			>
+				{productTypes.map((productType) => (
+					<option value={productType.id} selected={productType.id === product?.product_type_id}>
+						{productType.category_name} — {productType.name}
+					</option>
+				))}
+			</select>
+		</div>
+
+		<div>
+			<label class="mb-1 block text-sm text-ink-soft" for="price">Price (₦)</label>
+			<input
+				id="price"
+				name="price"
+				type="number"
+				step="0.01"
+				min="0"
+				required
+				value={priceNaira}
+				class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+			/>
+		</div>
+
+		<div>
+			<label class="mb-1 block text-sm text-ink-soft" for="stock_count">Stock on hand</label>
+			<input
+				id="stock_count"
+				name="stock_count"
+				type="number"
+				min="0"
+				required
+				value={product?.stock_count ?? 0}
+				class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+			/>
+		</div>
+
+		<div class="sm:col-span-2">
+			<label class="mb-1 block text-sm text-ink-soft" for="photo_url">Photo URL</label>
+			<input
+				id="photo_url"
+				name="photo_url"
+				type="url"
+				value={product?.photo_url ?? ''}
+				class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+			/>
+		</div>
+	</div>
+
+	<div>
+		<label class="mb-1 block text-sm text-ink-soft" for="description">Description</label>
+		<textarea
+			id="description"
+			name="description"
+			rows={3}
+			class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+		>{product?.description ?? ''}</textarea>
+	</div>
+
+	<div class="flex flex-wrap gap-6">
+		<label class="flex items-center gap-2 text-sm text-ink-soft">
+			<input type="checkbox" name="featured" value="1" checked={!!product?.featured} />
+			Featured
+		</label>
+		<label class="flex items-center gap-2 text-sm text-ink-soft">
+			<input type="checkbox" name="in_stock" value="1" checked={product ? !!product.in_stock : true} />
+			Visible in store
+		</label>
+	</div>
+
+	<button type="submit" class="rounded-full bg-sage-deep px-6 py-2.5 text-sm text-cream">
+		{product ? 'Save changes' : 'Create product'}
+	</button>
+</form>

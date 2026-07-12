@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'preact/hooks';
-import { getCart, onCartChange } from '../lib/cart';
+import { getCart, getCartItemCount, onCartChange } from '../lib/cart';
 
 export default function CartBadge() {
   const [count, setCount] = useState(0);
   const [bounce, setBounce] = useState(false);
 
   useEffect(() => {
-    const sync = () => setCount(getCart().length);
+    const sync = () => setCount(getCartItemCount(getCart()));
     sync();
     return onCartChange(sync);
   }, []);
@@ -22,7 +22,7 @@ export default function CartBadge() {
     <a
       href="/cart"
       aria-label={`Cart, ${count} item${count === 1 ? '' : 's'}`}
-      class="relative flex h-10 w-10 items-center justify-center rounded-full bg-sage/20 text-ink"
+      class="relative flex h-10 w-10 items-center justify-center rounded-full bg-white text-ink ring-1 ring-ink/10"
     >
       <span aria-hidden="true">🛒</span>
       {count > 0 && (
