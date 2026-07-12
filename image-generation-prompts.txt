@@ -1,0 +1,185 @@
+PETS BY CHERRY — TEXT-TO-IMAGE PROMPTS
+========================================
+For use with Midjourney, DALL-E 3, Stable Diffusion, Adobe Firefly, etc.
+These are prompts only — no images have been generated or added to the app.
+Once you've picked final images, they can replace the files under public/images/.
+
+
+SHARED STYLE GUIDE (apply to every prompt below)
+-------------------------------------------------
+Professional studio photography. Plain seamless background (light gray or soft
+off-white, per the reference photo). Soft, even, diffused studio lighting with a
+gentle catchlight — no harsh shadows, no dramatic/moody lighting. Sharp focus on
+the subject with a shallow depth of field. Photorealistic — not illustration,
+not 3D render, not cartoon. No people, no hands, no visible cages/tanks/props
+unless the prompt says otherwise, no text, no watermarks, no logos. High
+resolution.
+
+Brand accent (optional, for category shots only): a warm pastel sage green
+(#A9C98E) may tint the background or lighting instead of pure gray — keep it
+subtle, not saturated.
+
+
+=========================================
+SECTION 1 — INDIVIDUAL PET PORTRAITS
+=========================================
+Portrait orientation (4:5 or 3:4).
+
+1. Luna — Golden Retriever, female, 2 years
+"Professional studio portrait of a happy adult golden retriever, warm golden
+coat, sitting pose, head slightly tilted, mouth open in a friendly smile,
+tongue out, looking directly at camera. Plain seamless light gray studio
+background. Soft diffused lighting, catchlight in eyes. Sharp focus on face,
+shallow depth of field. Photorealistic, high resolution. No people, no props,
+no text. Portrait orientation."
+
+2. Max — Beagle, male, 1 year
+"Professional studio portrait of a young beagle, tricolor coat (white, brown,
+black), floppy ears, curious alert expression, sitting or lying pose, looking
+at camera. Plain seamless light gray studio background. Soft diffused studio
+lighting. Sharp focus on face, shallow depth of field. Photorealistic, high
+resolution. No people, no props, no text. Portrait orientation."
+
+3. Coco — Persian cat, female, 3 years
+"Professional studio portrait of an adult Persian cat, long fluffy white/cream
+fur, flat round face, large round eyes, calm serene expression, sitting pose
+facing camera. Plain seamless light gray studio background. Soft diffused
+studio lighting. Sharp focus on face, shallow depth of field. Photorealistic,
+high resolution. No people, no props, no text. Portrait orientation."
+
+4. Simba — Siamese cat, male, 8 months
+"Professional studio portrait of a young Siamese cat, cream body with dark
+seal-point face, ears and paws, striking blue eyes, sleek short coat, alert
+elegant pose, looking at camera. Plain seamless light gray studio background.
+Soft diffused studio lighting. Sharp focus on face, shallow depth of field.
+Photorealistic, high resolution. No people, no props, no text. Portrait
+orientation."
+
+5. Kiki — African Grey Parrot, female, 1 year
+"Professional studio portrait of an African grey parrot, grey feathered body,
+bright red tail feathers, black beak, white patch around the eyes, perched
+pose, alert intelligent expression, looking toward camera. Plain seamless
+light gray studio background. Soft diffused studio lighting. Sharp focus on
+face and feather detail, shallow depth of field. Photorealistic, high
+resolution. No people, no cage, no props, no text. Portrait orientation."
+
+6. Sunny — Cockatiel, male, 6 months
+"Professional studio portrait of a young cockatiel, grey body plumage, yellow
+face and crest, orange cheek patch, perched pose, alert curious expression.
+Plain seamless light gray studio background. Soft diffused studio lighting.
+Sharp focus on face and feather detail, shallow depth of field.
+Photorealistic, high resolution. No people, no cage, no props, no text.
+Portrait orientation."
+
+7. Bubbles — Tropical Fish, 3 months
+"Professional aquarium photography of a small colorful tropical freshwater
+fish swimming, vivid red and silver-blue coloring, side profile view, clear
+clean water, minimal aquatic plants softly blurred in the background. Deep
+blue-to-black gradient background, studio-lit aquarium tank. Sharp focus on
+the fish, shallow depth of field. Photorealistic, high resolution. No people,
+no text, no visible tank equipment. Portrait orientation."
+
+8. Finn — Koi Fish, 1 year
+"Professional aquarium/pond photography of a single ornamental koi fish
+swimming, orange and white patterned scales, elegant flowing fins, side
+profile view, clean clear water. Softly blurred neutral blue-toned
+background, no other fish, no rocks or debris. Sharp focus on the fish,
+shallow depth of field. Photorealistic, high resolution. No people, no text.
+Portrait orientation."
+
+
+=========================================
+SECTION 2 — CATEGORY HERO PHOTOS
+=========================================
+Portrait orientation (4:5), leave negative space in the bottom third for a
+text overlay (the category name is overlaid on the card in the app).
+
+9. Dogs category
+"Professional studio portrait of a happy medium-sized dog, friendly energetic
+expression, alert sitting pose, looking at camera. Plain seamless light
+sage-green to white studio background (#A9C98E tint), warm pastel pet-brand
+aesthetic. Soft diffused lighting. Sharp focus, shallow depth of field.
+Photorealistic, high resolution. No people, no props, no text. Portrait
+orientation, ample negative space in the bottom third."
+
+10. Cats category
+"Professional studio portrait of a friendly adult cat, warm approachable
+expression, sitting or reclining pose, looking toward camera. Plain seamless
+light sage-green to white studio background (#A9C98E tint), warm pastel
+pet-brand aesthetic. Soft diffused lighting. Sharp focus, shallow depth of
+field. Photorealistic, high resolution. No people, no props, no text.
+Portrait orientation, ample negative space in the bottom third."
+
+11. Birds category
+"Professional studio portrait of a vividly colored pet parrot, perched pose,
+alert and engaging expression, looking toward camera. Plain seamless light
+sage-green to white studio background (#A9C98E tint), warm pastel pet-brand
+aesthetic. Soft diffused lighting. Sharp focus on feather detail, shallow
+depth of field. Photorealistic, high resolution. No people, no cage, no
+props, no text. Portrait orientation, ample negative space in the bottom
+third."
+
+12. Fish category
+"Professional aquarium photography of a small school of colorful tropical
+fish swimming together, vivid red and blue coloring, softly blurred aquatic
+plants. Deep blue gradient background with a soft green accent tint
+(#A9C98E), warm pastel pet-brand aesthetic. Sharp focus, shallow depth of
+field. Photorealistic, high resolution. No people, no text. Portrait
+orientation, ample negative space in the bottom third."
+
+
+=========================================
+SECTION 3 — PRODUCT PHOTOGRAPHY
+=========================================
+Square aspect ratio (1:1). Labels intentionally blank/unbranded — do not
+generate real brand names or logos.
+
+13. Anti-Chew Deterrent Spray (Dogs — Accessories)
+"Professional e-commerce product photography of a white plastic spray bottle
+with a spray-trigger nozzle, blank unbranded label area, standing upright on
+a small round pedestal. Plain seamless light gray to white gradient studio
+background. Soft even studio lighting, subtle shadow beneath the product.
+Centered composition, sharp focus, high resolution, photorealistic. No
+people, no hands, no text or logo on the label, no clutter. Square aspect
+ratio."
+
+14. Salmon Joint Support Chews (Dogs — Treats)
+"Professional e-commerce product photography of a clear plastic supplement
+jar with a black screw-on lid, blank unbranded white label wrap, filled with
+small orange/salmon-colored soft chew treats, a couple of chews spilled
+beside the jar. Plain seamless light gray to white studio background. Soft
+even studio lighting, subtle shadow beneath the product. Centered
+composition, sharp focus, high resolution, photorealistic. No people, no
+hands, no text or logo on the label, no clutter. Square aspect ratio."
+
+15. Feline Wellness Chews (Cats — Treats)
+"Professional e-commerce product photography of a clear plastic supplement
+jar with a black screw-on lid, blank unbranded white label wrap, filled with
+small round tan/beige soft chew treats, a few chews spilled beside the jar.
+Plain seamless light gray to white studio background. Soft even studio
+lighting, subtle shadow beneath the product. Centered composition, sharp
+focus, high resolution, photorealistic. No people, no hands, no text or logo
+on the label, no clutter. Square aspect ratio."
+
+16. Wild Bird Feeder (Birds — Accessories)
+"Professional e-commerce product photography of an empty hanging bird feeder,
+clear polycarbonate seed tube with a weatherproof orange/brown plastic roof
+and base, metal perches, hanging chain at the top, no birds. Plain seamless
+light gray to white studio background. Soft even studio lighting, subtle
+shadow beneath the product. Centered composition, sharp focus, high
+resolution, photorealistic. No people, no hands, no text or logo, no
+clutter. Square aspect ratio."
+
+
+NOTES
+-----
+- Bubbles and Finn are labeled "Tropical Fish" and "Koi Fish" (not a specific
+  betta/goldfish species) because that's what the current photos actually
+  show — feel free to generate a specific species instead if you'd prefer,
+  just update the pet's "breed" field in admin to match.
+- Midjourney users: append "--ar 4:5" (pets/categories) or "--ar 1:1"
+  (products) and "--style raw" for a more literal, less stylized result.
+- Once you have final images, save them into public/images/pets/,
+  public/images/categories/, or public/images/products/ (matching filenames
+  already used) and I can wire them in, or just tell me and I'll update the
+  database rows to point at new filenames.
