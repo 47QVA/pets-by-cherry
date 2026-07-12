@@ -22,7 +22,7 @@ const products = await getAllProducts(env.DB);
 						<th class="px-4 py-3 font-medium">Name</th>
 						<th class="px-4 py-3 font-medium">Price</th>
 						<th class="px-4 py-3 font-medium">Stock</th>
-						<th class="px-4 py-3 font-medium">Visible</th>
+						<th class="hidden px-4 py-3 font-medium sm:table-cell">Visible</th>
 						<th class="px-4 py-3 font-medium"></th>
 					</tr>
 				</thead>
@@ -34,7 +34,7 @@ const products = await getAllProducts(env.DB);
 							<td class={`px-4 py-3 ${product.stock_count <= 2 ? 'font-medium text-coral' : 'text-ink-soft'}`}>
 								{product.stock_count}
 							</td>
-							<td class="px-4 py-3 text-ink-soft">{product.in_stock ? 'Yes' : 'No'}</td>
+							<td class="hidden px-4 py-3 text-ink-soft sm:table-cell">{product.in_stock ? 'Yes' : 'No'}</td>
 							<td class="px-4 py-3 text-right">
 								<a href={`/admin/products/${product.id}/edit`} class="text-sage-deep underline">
 									Edit

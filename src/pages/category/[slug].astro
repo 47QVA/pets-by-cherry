@@ -46,7 +46,7 @@ if (!loadError && !category) {
 			))}
 		</nav>
 
-		<h1 class="mb-6 font-display text-3xl text-ink">{category?.name}</h1>
+		<h1 class="mb-6 font-display text-2xl text-ink sm:text-3xl">{category?.name}</h1>
 
 		{loadError && (
 			<p class="rounded-2xl bg-coral/10 p-4 text-ink-soft">
@@ -78,7 +78,7 @@ if (!loadError && !category) {
 
 		{!loadError && products.length > 0 && (
 			<div class="mt-10">
-				<h2 class="mb-4 font-display text-2xl text-ink">Shop for {category?.name}</h2>
+				<h2 class="mb-4 font-display text-xl text-ink sm:text-2xl">Shop for {category?.name}</h2>
 				<div class="grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-6">
 					{products.map((product, index) => (
 						<ProductCard

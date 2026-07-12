@@ -20,7 +20,7 @@ const petTypes = await getAllPetTypes(env.DB);
 					<tr class="border-b border-ink/10 text-ink-soft">
 						<th class="px-4 py-3 font-medium">Category</th>
 						<th class="px-4 py-3 font-medium">Name</th>
-						<th class="px-4 py-3 font-medium">Slug</th>
+						<th class="hidden px-4 py-3 font-medium sm:table-cell">Slug</th>
 						<th class="px-4 py-3 font-medium"></th>
 					</tr>
 				</thead>
@@ -29,7 +29,7 @@ const petTypes = await getAllPetTypes(env.DB);
 						<tr class="border-b border-ink/5 last:border-0">
 							<td class="px-4 py-3 text-ink-soft">{petType.category_name}</td>
 							<td class="px-4 py-3 text-ink">{petType.name}</td>
-							<td class="px-4 py-3 text-ink-soft">{petType.slug}</td>
+							<td class="hidden px-4 py-3 text-ink-soft sm:table-cell">{petType.slug}</td>
 							<td class="px-4 py-3 text-right">
 								<a href={`/admin/pet-types/${petType.id}/edit`} class="text-sage-deep underline">
 									Edit

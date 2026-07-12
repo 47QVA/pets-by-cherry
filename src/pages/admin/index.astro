@@ -25,9 +25,9 @@ const cards = [
 
 	<div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
 		{cards.map((card) => (
-			<a href={card.href} class="rounded-2xl bg-white p-6 ring-1 ring-ink/10 hover:ring-sage-deep">
+			<a href={card.href} class="rounded-2xl bg-white p-4 ring-1 ring-ink/10 hover:ring-sage-deep sm:p-6">
 				<p class="text-sm text-ink-soft">{card.label}</p>
-				<p class="mt-1 font-display text-3xl text-ink">{card.value}</p>
+				<p class="mt-1 font-display text-2xl text-ink sm:text-3xl">{card.value}</p>
 			</a>
 		))}
 	</div>

@@ -22,8 +22,8 @@ const pets = await getAllPets(env.DB);
 						<th class="px-4 py-3 font-medium">Name</th>
 						<th class="px-4 py-3 font-medium">Price</th>
 						<th class="px-4 py-3 font-medium">Stock</th>
-						<th class="px-4 py-3 font-medium">Featured</th>
-						<th class="px-4 py-3 font-medium">In stock</th>
+						<th class="hidden px-4 py-3 font-medium sm:table-cell">Featured</th>
+						<th class="hidden px-4 py-3 font-medium sm:table-cell">In stock</th>
 						<th class="px-4 py-3 font-medium"></th>
 					</tr>
 				</thead>
@@ -35,8 +35,8 @@ const pets = await getAllPets(env.DB);
 							<td class={`px-4 py-3 ${pet.stock_count <= 0 ? 'font-medium text-coral' : 'text-ink-soft'}`}>
 								{pet.stock_count}
 							</td>
-							<td class="px-4 py-3 text-ink-soft">{pet.featured ? 'Yes' : '—'}</td>
-							<td class="px-4 py-3 text-ink-soft">{pet.in_stock ? 'Yes' : 'No'}</td>
+							<td class="hidden px-4 py-3 text-ink-soft sm:table-cell">{pet.featured ? 'Yes' : '—'}</td>
+							<td class="hidden px-4 py-3 text-ink-soft sm:table-cell">{pet.in_stock ? 'Yes' : 'No'}</td>
 							<td class="px-4 py-3 text-right">
 								<a href={`/admin/pets/${pet.id}/edit`} class="text-sage-deep underline">
 									Edit

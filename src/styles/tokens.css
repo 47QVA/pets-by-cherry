@@ -5,7 +5,7 @@
 @theme {
   --color-sage: #a9c98e;
   --color-sage-deep: #6f9a55;
-  --color-cream: #fbf9f3;
+  --color-cream: #ffffff;
   --color-paw-brown: #8b5e3c;
   --color-coral: #f0824a;
   --color-ink: #22301d;
@@ -32,7 +32,7 @@
 :root {
   --sage: #a9c98e;
   --sage-deep: #6f9a55;
-  --cream: #fbf9f3;
+  --cream: #ffffff;
   --paw-brown: #8b5e3c;
   --coral: #f0824a;
   --ink: #22301d;

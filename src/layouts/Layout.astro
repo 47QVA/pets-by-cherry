@@ -28,10 +28,6 @@ const currentPath = Astro.url.pathname;
 			Skip to content
 		</a>
 
-		<div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-			<div class="blob-field"></div>
-		</div>
-
 		<header class="flex items-center justify-between px-6 py-4 sm:px-10">
 			<a href="/" class="font-display text-2xl text-sage-deep">Pets by Cherry</a>
 			<div class="flex items-center gap-2">
@@ -47,14 +43,3 @@ const currentPath = Astro.url.pathname;
 		<MobileTabBar client:load currentPath={currentPath} />
 	</body>
 </html>
-
-<style>
-	.blob-field {
-		position: absolute;
-		inset: 0;
-		background:
-			radial-gradient(circle at 15% 20%, color-mix(in srgb, var(--sage) 5%, transparent) 0%, transparent 40%),
-			radial-gradient(circle at 85% 10%, color-mix(in srgb, var(--paw-brown) 3%, transparent) 0%, transparent 35%),
-			radial-gradient(circle at 75% 80%, color-mix(in srgb, var(--sage-deep) 4%, transparent) 0%, transparent 45%);
-	}
-</style>

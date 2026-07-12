@@ -23,8 +23,8 @@ const orders = await getAllOrders(env.DB);
 						<th class="px-4 py-3 font-medium">Receipt ref</th>
 						<th class="px-4 py-3 font-medium">Items</th>
 						<th class="px-4 py-3 font-medium">Total</th>
-						<th class="px-4 py-3 font-medium">Delivery address</th>
-						<th class="px-4 py-3 font-medium">Placed</th>
+						<th class="hidden px-4 py-3 font-medium md:table-cell">Delivery address</th>
+						<th class="hidden px-4 py-3 font-medium sm:table-cell">Placed</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -35,8 +35,8 @@ const orders = await getAllOrders(env.DB);
 								<td class="px-4 py-3 text-ink">{order.fake_receipt_ref}</td>
 								<td class="px-4 py-3 text-ink-soft">{items.map((item) => item.name).join(', ')}</td>
 								<td class="px-4 py-3 text-ink-soft">{formatPrice(order.total_cents)}</td>
-								<td class="px-4 py-3 text-ink-soft">{order.fake_delivery_address}</td>
-								<td class="px-4 py-3 text-ink-soft">{order.created_at}</td>
+								<td class="hidden px-4 py-3 text-ink-soft md:table-cell">{order.fake_delivery_address}</td>
+								<td class="hidden px-4 py-3 text-ink-soft sm:table-cell">{order.created_at}</td>
 							</tr>
 						);
 					})}

@@ -35,7 +35,7 @@ const items: CartItem[] = order ? JSON.parse(order.items_json) : [];
 		{!loadError && order && (
 			<>
 				<div class="rounded-3xl bg-sage/10 p-6 text-center">
-					<p class="font-display text-2xl text-ink">Order confirmed 🎉</p>
+					<p class="font-display text-xl text-ink sm:text-2xl">Order confirmed 🎉</p>
 					<p class="mt-1 text-ink-soft">Demo checkout — no real payment was processed.</p>
 					<p class="mt-4 font-display text-lg text-sage-deep">{order.fake_receipt_ref}</p>
 				</div>

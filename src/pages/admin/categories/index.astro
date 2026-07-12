@@ -18,18 +18,18 @@ const categories = await getCategories(env.DB);
 			<table class="w-full text-left text-sm">
 				<thead>
 					<tr class="border-b border-ink/10 text-ink-soft">
-						<th class="px-4 py-3 font-medium">Sort</th>
+						<th class="hidden px-4 py-3 font-medium sm:table-cell">Sort</th>
 						<th class="px-4 py-3 font-medium">Name</th>
-						<th class="px-4 py-3 font-medium">Slug</th>
+						<th class="hidden px-4 py-3 font-medium sm:table-cell">Slug</th>
 						<th class="px-4 py-3 font-medium"></th>
 					</tr>
 				</thead>
 				<tbody>
 					{categories.map((category) => (
 						<tr class="border-b border-ink/5 last:border-0">
-							<td class="px-4 py-3 text-ink-soft">{category.sort_order}</td>
+							<td class="hidden px-4 py-3 text-ink-soft sm:table-cell">{category.sort_order}</td>
 							<td class="px-4 py-3 text-ink">{category.name}</td>
-							<td class="px-4 py-3 text-ink-soft">{category.slug}</td>
+							<td class="hidden px-4 py-3 text-ink-soft sm:table-cell">{category.slug}</td>
 							<td class="px-4 py-3 text-right">
 								<a href={`/admin/categories/${category.id}/edit`} class="text-sage-deep underline">
 									Edit
