@@ -1,6 +1,7 @@
 ---
 import '../styles/tokens.css';
 import CartBadge from '../components/CartBadge';
+import FavoritesBadge from '../components/FavoritesBadge';
 import MobileTabBar from '../components/MobileTabBar';
 
 interface Props {
@@ -33,7 +34,10 @@ const currentPath = Astro.url.pathname;
 
 		<header class="flex items-center justify-between px-6 py-4 sm:px-10">
 			<a href="/" class="font-display text-2xl text-sage-deep">Pets by Cherry</a>
-			<CartBadge client:load />
+			<div class="flex items-center gap-2">
+				<FavoritesBadge client:load />
+				<CartBadge client:load />
+			</div>
 		</header>
 
 		<main id="main-content" class="px-6 pb-24 sm:px-10 sm:pb-16">

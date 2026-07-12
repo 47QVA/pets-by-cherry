@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'preact/hooks';
 import { formatPrice } from '../lib/format';
+import { isFavorited, onFavoritesChange, toggleFavorite } from '../lib/favorites';
 
 interface PetCardProps {
   id: number;
@@ -10,6 +12,20 @@ interface PetCardProps {
 }
 
 export default function PetCard({ id, name, breed, priceCents, photoUrl, index = 0 }: PetCardProps) {
+  const [favorited, setFavorited] = useState(false);
+
+  useEffect(() => {
+    const sync = () => setFavorited(isFavorited('pet', id));
+    sync();
+    return onFavoritesChange(sync);
+  }, [id]);
+
+  function handleToggleFavorite(e: MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleFavorite({ kind: 'pet', id, name, priceCents, photoUrl });
+  }
+
   return (
     <a
       href={`/pet/${id}`}
@@ -27,12 +43,17 @@ export default function PetCard({ id, name, breed, priceCents, photoUrl, index =
         ) : (
           <div class="h-full w-full bg-sage/40" />
         )}
-        <span
-          aria-hidden="true"
-          class="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-cream/90 text-ink-soft shadow-sm"
+        <button
+          type="button"
+          onClick={handleToggleFavorite}
+          aria-label={favorited ? `Remove ${name} from favourites` : `Add ${name} to favourites`}
+          aria-pressed={favorited}
+          class={`absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-cream/90 shadow-sm ${
+            favorited ? 'text-coral' : 'text-ink-soft'
+          }`}
         >
-          ♡
-        </span>
+          <span aria-hidden="true">{favorited ? '♥' : '♡'}</span>
+        </button>
       </div>
       <div class="space-y-0.5 p-3">
         <p class="truncate font-display text-lg text-ink">{name}</p>

@@ -64,6 +64,7 @@ if (!loadError && !category) {
 			<div class="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6">
 				{pets.map((pet, index) => (
 					<PetCard
+						client:load
 						id={pet.id}
 						name={pet.name}
 						breed={pet.breed}
