@@ -3,12 +3,12 @@
   "name": "pets-by-cherry",
   "compatibility_date": "2026-07-01",
   "compatibility_flags": ["nodejs_compat"],
-  "pages_build_output_dir": "./dist",
+  "routes": [{ "pattern": "pets.ebenezerafonja.com", "custom_domain": true }],
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "pets_by_cherry_db",
-      "database_id": "local-placeholder-until-wrangler-login"
+      "database_id": "91648a87-fd30-4ead-9983-463185100d4b"
     }
   ]
 }

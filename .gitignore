@@ -29,3 +29,6 @@ worker-configuration.d.ts
 
 # jetbrains setting folder
 .idea/
+
+# internal working notes (kept out of the public showcase repo)
+CLAUDE.md

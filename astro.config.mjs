@@ -16,7 +16,8 @@ export default defineConfig({
   output: 'server',
   integrations: [preact()],
   adapter: cloudflare({
-    persistState: { path: wranglerPersistPath }
+    persistState: { path: wranglerPersistPath },
+    imageService: 'passthrough'
   }),
   vite: {
     plugins: [tailwindcss()]
