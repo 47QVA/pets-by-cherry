@@ -17,9 +17,9 @@ export default function CartView() {
 
   if (items.length === 0) {
     return (
-      <div class="rounded-2xl bg-white ring-1 ring-ink/10 p-8 text-center">
-        <p class="text-ink-soft">Your cart is empty.</p>
-        <a href="/" class="mt-4 inline-block rounded-full bg-sage-deep px-6 py-3 font-medium text-cream">
+      <div class="bg-white border border-black/10 p-8 text-center">
+        <p class="text-gray">Your cart is empty.</p>
+        <a href="/" class="mt-4 inline-block bg-blue px-6 py-3 font-medium text-white">
           Browse pets
         </a>
       </div>
@@ -30,13 +30,13 @@ export default function CartView() {
     <div>
       <ul class="space-y-3">
         {items.map((item) => (
-          <li key={`${item.kind}-${item.id}`} class="flex items-center gap-4 rounded-2xl bg-cream p-3 ring-1 ring-ink/5">
-            <div class="h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-sage/30">
+          <li key={`${item.kind}-${item.id}`} class="flex items-center gap-4 bg-white p-3 border border-black/5">
+            <div class="h-16 w-16 shrink-0 overflow-hidden bg-surface">
               {item.photoUrl && <img src={item.photoUrl} alt={item.name} class="h-full w-full object-cover" />}
             </div>
             <div class="flex-1">
               <p class="font-display text-lg text-ink">{item.name}</p>
-              <p class="text-sm text-ink-soft">{formatPrice(item.priceCents)}</p>
+              <p class="text-sm text-gray">{formatPrice(item.priceCents)}</p>
             </div>
 
             {item.kind === 'product' ? (
@@ -45,7 +45,7 @@ export default function CartView() {
                   type="button"
                   onClick={() => setQuantity(item.kind, item.id, item.quantity - 1)}
                   aria-label={`Decrease quantity of ${item.name}`}
-                  class="flex h-7 w-7 items-center justify-center rounded-full bg-white text-ink ring-1 ring-ink/10"
+                  class="flex h-7 w-7 items-center justify-center bg-white text-ink border border-black/10"
                 >
                   −
                 </button>
@@ -54,7 +54,7 @@ export default function CartView() {
                   type="button"
                   onClick={() => setQuantity(item.kind, item.id, item.quantity + 1)}
                   aria-label={`Increase quantity of ${item.name}`}
-                  class="flex h-7 w-7 items-center justify-center rounded-full bg-white text-ink ring-1 ring-ink/10"
+                  class="flex h-7 w-7 items-center justify-center bg-white text-ink border border-black/10"
                 >
                   +
                 </button>
@@ -64,7 +64,7 @@ export default function CartView() {
                 type="button"
                 onClick={() => removeFromCart(item.kind, item.id)}
                 aria-label={`Remove ${item.name} from cart`}
-                class="text-ink-soft underline"
+                class="text-gray underline"
               >
                 Remove
               </button>
@@ -73,14 +73,14 @@ export default function CartView() {
         ))}
       </ul>
 
-      <div class="mt-6 flex items-center justify-between border-t border-ink/10 pt-4">
+      <div class="mt-6 flex items-center justify-between border-t border-black/10 pt-4">
         <span class="font-display text-lg text-ink">Total</span>
-        <span class="font-display text-xl text-coral">{formatPrice(getCartTotal(items))}</span>
+        <span class="font-display text-xl text-accent">{formatPrice(getCartTotal(items))}</span>
       </div>
 
       <a
         href="/checkout"
-        class="mt-6 block rounded-full bg-coral px-6 py-4 text-center font-display text-lg text-cream"
+        class="mt-6 block bg-accent px-6 py-4 text-center font-display text-lg text-white"
       >
         Proceed to checkout
       </a>

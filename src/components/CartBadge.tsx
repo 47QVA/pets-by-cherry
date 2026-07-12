@@ -22,12 +22,12 @@ export default function CartBadge() {
     <a
       href="/cart"
       aria-label={`Cart, ${count} item${count === 1 ? '' : 's'}`}
-      class="relative flex h-10 w-10 items-center justify-center rounded-full bg-white text-ink ring-1 ring-ink/10"
+      class="relative flex h-10 w-10 items-center justify-center bg-white text-ink border border-black/10"
     >
       <span aria-hidden="true">🛒</span>
       {count > 0 && (
         <span
-          class={`absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-coral px-1 text-xs font-medium text-cream motion-safe:transition-transform motion-safe:duration-200 ${
+          class={`absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center bg-accent px-1 text-xs font-medium text-white motion-safe:transition-transform motion-safe:duration-200 ${
             bounce ? 'motion-safe:scale-125' : 'motion-safe:scale-100'
           }`}
         >

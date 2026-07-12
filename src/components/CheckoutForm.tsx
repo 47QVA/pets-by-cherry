@@ -30,9 +30,9 @@ export default function CheckoutForm() {
 
   if (items.length === 0) {
     return (
-      <div class="rounded-2xl bg-white ring-1 ring-ink/10 p-8 text-center">
-        <p class="text-ink-soft">Your cart is empty, so there's nothing to check out.</p>
-        <a href="/" class="mt-4 inline-block rounded-full bg-sage-deep px-6 py-3 font-medium text-cream">
+      <div class="bg-white border border-black/10 p-8 text-center">
+        <p class="text-gray">Your cart is empty, so there's nothing to check out.</p>
+        <a href="/" class="mt-4 inline-block bg-blue px-6 py-3 font-medium text-white">
           Browse pets
         </a>
       </div>
@@ -79,7 +79,7 @@ export default function CheckoutForm() {
     return (
       <form onSubmit={handleDeliverySubmit} class="space-y-4">
         <div>
-          <label class="mb-1 block text-sm text-ink-soft" for="name">
+          <label class="mb-1 block text-sm text-gray" for="name">
             Full name
           </label>
           <input
@@ -88,12 +88,12 @@ export default function CheckoutForm() {
             required
             value={delivery.name}
             onInput={(e) => setDelivery({ ...delivery, name: (e.target as HTMLInputElement).value })}
-            class="w-full rounded-xl bg-cream px-4 py-3 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+            class="w-full bg-white px-4 py-3 border border-black/10 focus:outline-none focus:ring-2 focus:ring-blue"
           />
         </div>
 
         <div>
-          <label class="mb-1 block text-sm text-ink-soft" for="phone">
+          <label class="mb-1 block text-sm text-gray" for="phone">
             Phone number
           </label>
           <input
@@ -102,12 +102,12 @@ export default function CheckoutForm() {
             required
             value={delivery.phone}
             onInput={(e) => setDelivery({ ...delivery, phone: (e.target as HTMLInputElement).value })}
-            class="w-full rounded-xl bg-cream px-4 py-3 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+            class="w-full bg-white px-4 py-3 border border-black/10 focus:outline-none focus:ring-2 focus:ring-blue"
           />
         </div>
 
         <div>
-          <label class="mb-1 block text-sm text-ink-soft" for="state">
+          <label class="mb-1 block text-sm text-gray" for="state">
             State
           </label>
           <select
@@ -115,7 +115,7 @@ export default function CheckoutForm() {
             required
             value={delivery.state}
             onChange={(e) => setDelivery({ ...delivery, state: (e.target as HTMLSelectElement).value })}
-            class="w-full rounded-xl bg-cream px-4 py-3 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+            class="w-full bg-white px-4 py-3 border border-black/10 focus:outline-none focus:ring-2 focus:ring-blue"
           >
             <option value="" disabled>
               Select a state
@@ -127,7 +127,7 @@ export default function CheckoutForm() {
         </div>
 
         <div>
-          <label class="mb-1 block text-sm text-ink-soft" for="address">
+          <label class="mb-1 block text-sm text-gray" for="address">
             Delivery address
           </label>
           <textarea
@@ -136,15 +136,15 @@ export default function CheckoutForm() {
             rows={3}
             value={delivery.address}
             onInput={(e) => setDelivery({ ...delivery, address: (e.target as HTMLTextAreaElement).value })}
-            class="w-full rounded-xl bg-cream px-4 py-3 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+            class="w-full bg-white px-4 py-3 border border-black/10 focus:outline-none focus:ring-2 focus:ring-blue"
           />
         </div>
 
-        {error && <p class="text-sm text-coral">{error}</p>}
+        {error && <p class="text-sm text-accent">{error}</p>}
 
         <button
           type="submit"
-          class="w-full rounded-full bg-sage-deep px-6 py-4 font-display text-lg text-cream"
+          class="w-full bg-blue px-6 py-4 font-display text-lg text-white"
         >
           Continue to payment
         </button>
@@ -154,37 +154,37 @@ export default function CheckoutForm() {
 
   return (
     <div>
-      <div class="mb-6 rounded-2xl bg-white ring-1 ring-ink/10 p-4">
-        <p class="text-sm text-ink-soft">Delivering to</p>
+      <div class="mb-6 bg-white border border-black/10 p-4">
+        <p class="text-sm text-gray">Delivering to</p>
         <p class="text-ink">
           {delivery.name} · {delivery.phone}
         </p>
-        <p class="text-ink-soft">
+        <p class="text-gray">
           {delivery.address}, {delivery.state}
         </p>
-        <button type="button" onClick={() => setStep('delivery')} class="mt-2 text-sm text-sage-deep underline">
+        <button type="button" onClick={() => setStep('delivery')} class="mt-2 text-sm text-blue underline">
           Edit
         </button>
       </div>
 
-      <div class="rounded-2xl bg-cream p-6 ring-1 ring-ink/10">
+      <div class="bg-white p-6 border border-black/10">
         <p class="font-display text-lg text-ink">Pay with card</p>
-        <p class="mt-1 text-sm text-ink-soft">
+        <p class="mt-1 text-sm text-gray">
           Demo checkout — no real payment is processed.
         </p>
 
-        <div class="mt-4 flex items-center justify-between border-t border-ink/10 pt-4">
-          <span class="text-ink-soft">Total</span>
-          <span class="font-display text-xl text-coral">{formatPrice(total)}</span>
+        <div class="mt-4 flex items-center justify-between border-t border-black/10 pt-4">
+          <span class="text-gray">Total</span>
+          <span class="font-display text-xl text-accent">{formatPrice(total)}</span>
         </div>
 
-        {error && <p class="mt-3 text-sm text-coral">{error}</p>}
+        {error && <p class="mt-3 text-sm text-accent">{error}</p>}
 
         <button
           type="button"
           disabled={step === 'paying'}
           onClick={handlePay}
-          class="mt-4 w-full rounded-full bg-coral px-6 py-4 font-display text-lg text-cream disabled:opacity-60"
+          class="mt-4 w-full bg-accent px-6 py-4 font-display text-lg text-white disabled:opacity-60"
         >
           {step === 'paying' ? 'Processing…' : `Pay ${formatPrice(total)}`}
         </button>

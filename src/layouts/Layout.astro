@@ -23,13 +23,13 @@ const currentPath = Astro.url.pathname;
 	<body class="min-h-screen">
 		<a
 			href="#main-content"
-			class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-sage-deep focus:px-4 focus:py-2 focus:text-cream"
+			class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-blue focus:px-4 focus:py-2 focus:text-white"
 		>
 			Skip to content
 		</a>
 
-		<header class="flex items-center justify-between px-6 py-4 sm:px-10">
-			<a href="/" class="font-display text-2xl text-sage-deep">Pets by Cherry</a>
+		<header class="sticky top-0 z-30 flex items-center justify-between border-b border-black/10 bg-white/80 px-6 py-4 backdrop-blur sm:px-10">
+			<a href="/" class="font-display text-2xl font-semibold tracking-tight text-ink">Pets by Cherry</a>
 			<div class="flex items-center gap-2">
 				<FavoritesBadge client:load />
 				<CartBadge client:load />

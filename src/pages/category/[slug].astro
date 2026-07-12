@@ -35,10 +35,10 @@ if (!loadError && !category) {
 				<a
 					href={`/category/${c.slug}`}
 					aria-current={c.slug === slug ? 'page' : undefined}
-					class={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+					class={`px-4 py-2 text-sm font-medium transition-colors ${
 						c.slug === slug
-							? 'bg-sage-deep text-cream'
-							: 'bg-white text-ink-soft ring-1 ring-ink/10 hover:bg-sage/10'
+							? 'bg-blue text-white'
+							: 'bg-white text-gray border border-black/10 hover:bg-surface'
 					}`}
 				>
 					{c.name}
@@ -46,16 +46,16 @@ if (!loadError && !category) {
 			))}
 		</nav>
 
-		<h1 class="mb-6 font-display text-2xl text-ink sm:text-3xl">{category?.name}</h1>
+		<h1 class="mb-6 font-display font-semibold tracking-tight text-2xl text-ink sm:text-3xl">{category?.name}</h1>
 
 		{loadError && (
-			<p class="rounded-2xl bg-coral/10 p-4 text-ink-soft">
+			<p class="bg-accent/10 p-4 text-gray">
 				Couldn't load this category. Try again.
 			</p>
 		)}
 
 		{!loadError && pets.length === 0 && (
-			<p class="rounded-2xl bg-white p-4 text-ink-soft ring-1 ring-ink/10">
+			<p class="bg-white p-4 text-gray border border-black/10">
 				No pets in this category yet, check back soon.
 			</p>
 		)}
@@ -78,8 +78,8 @@ if (!loadError && !category) {
 
 		{!loadError && products.length > 0 && (
 			<div class="mt-10">
-				<h2 class="mb-4 font-display text-xl text-ink sm:text-2xl">Shop for {category?.name}</h2>
-				<div class="grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-6">
+				<h2 class="mb-4 font-display font-semibold tracking-tight text-xl text-ink sm:text-2xl">Shop for {category?.name}</h2>
+				<div class="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4">
 					{products.map((product, index) => (
 						<ProductCard
 							client:load

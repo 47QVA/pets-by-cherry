@@ -23,41 +23,76 @@ A demo (not a real business) ecommerce site selling pets, built to show off full
 
 ## 2. Design direction
 
-**Primary reference: "Pawsome" screenshot (strongest direction).** Soft, warm, organic pet-brand feel — sage green fields, big friendly pet photography, rounded cards, a clean category grid. Everything else takes cues only where it improves this, never competes with it.
+**Superseded 2026-07-12 by direct client feedback — minimal, Apple-style.** The
+original "Pawsome" sage/cream/coral/rounded direction below is kept for history
+only; do not build against it. Current direction: blue + white + one minor
+accent color, no rounded corners anywhere (buttons, cards, images all sharp),
+Inter throughout, restrained motion, "liquid glass" (translucency/blur) used on
+at most two surfaces (sticky header, mobile tab bar) — nowhere else.
 
 ### 2.1 Colour
 
 ```
---sage:        #A9C98E   /* primary brand green — Pawsome-derived      */
---sage-deep:   #6F9A55   /* darker green for text-on-light, CTAs       */
---cream:       #FBF9F3   /* card / page background                    */
---paw-brown:   #8B5E3C   /* warm accent — collars, price tags          */
---coral:       #F0824A   /* single high-energy accent — cart badge,    */
-                          /* "Adopt/Buy" CTA — used sparingly           */
---ink:         #22301D   /* primary text                               */
---ink-soft:    #5C6B54   /* secondary text                             */
+--blue:     #0071E3   /* primary — CTAs, links, active nav/category state */
+--accent:   #F56300   /* the one minor color — price, low-stock, in-cart, errors */
+--surface:  #F5F5F7   /* light neutral fill for chips/empty-state boxes */
+--ink:      #1D1D1F   /* primary text */
+--gray:     #6E6E73   /* secondary text */
 ```
 
-Backgrounds are soft and organic — never flat white. Use pale sage or cream fields with subtle blob/paw-print texture (low-opacity, decorative only, never busy).
+Page and card background is plain white (`#FFFFFF`) — no tinted or textured
+backgrounds. Hairline dividers use `border-black/10` (or `/5` for very subtle
+separators), not colored borders/rings.
 
 ### 2.2 Typography
-- **Display / headings:** a rounded, friendly sans (e.g. **Fredoka** or **Baloo 2**) — echoes the reference wordmark's energy without being childish. Used for the "Pets by Cherry" logotype and with restraint elsewhere (headlines, section titles, price).
-- **Body / UI:** a clean humanist sans (**Inter** or **Geist**) for everything else — readable, calm counterweight to the display face.
-- Category cards, price tags: medium weight, generous corner radius (16–24px) matching the reference.
+- **Inter** for everything — no separate display face. Headings additionally get
+  `font-semibold tracking-tight`; body copy stays regular weight.
+- Fluid, responsive sizing on large headings (e.g. the home hero uses
+  `clamp()`) rather than jumping between fixed breakpoint sizes.
 
-### 2.3 Layout cues taken from the other references
-- **Pill-shaped category chips** (Dogs / Cats / Small Pets / Birds…) — from the filter-chip pattern across refs 3–4.
-- **Rounded product cards** with photo bleeding to the card edge, price + heart/favourite icon overlay — consistent across all six refs, keep it.
-- **Bottom tab bar** (Home / Categories / Search / Cart) for mobile — from ref 2.
-- **Pet detail page**: hero photo, quick-fact pills (age, breed, weight, vaccinated), description, big CTA button at the bottom — synthesised from refs 3, 4, 5.
+### 2.3 Shape and layout
+- **No rounded corners** on buttons, cards, product/pet photos, chips, or
+  badges — everything is sharp-edged.
+- Pill-shaped category chips are now plain rectangular chips (active = solid
+  blue fill, inactive = white with a hairline border).
+- Rounded product cards are now sharp-edged cards; photo still bleeds to the
+  card edge, price + heart/favourite icon overlay stays.
+- Bottom tab bar (Home / Categories / Cart) for mobile — one of the two
+  surfaces allowed a translucent/blurred background.
+- Pet **and product** detail pages: hero photo, quick facts, description, big
+  CTA buttons ("Add to cart" / "Buy now") at the bottom. Products get the same
+  detail-page treatment as pets, not just an inline add-to-cart button.
 
 ### 2.4 Motion
 - Card entrance: gentle fade+rise, staggered.
-- "Add to cart" — small bounce on the cart badge count (this is a *pet* store, a little playfulness earns its keep here, unlike a weather or finance app).
+- "Add to cart" — small bounce on the cart badge count; product cards show an
+  explicit "In cart ✓" state after adding.
 - Respect `prefers-reduced-motion`.
+- The home hero headline uses `mix-blend-mode: difference` (white text) so it
+  stays legible whether it's sitting over the plain white background or
+  overlapping the hero photo — it inverts to a contrasting color on overlap
+  instead of needing a rigid non-overlapping layout.
 
 ### 2.5 Signature element
-**The category grid as a "meet the family" moment** — instead of generic icon tiles, each category (Dogs, Cats, Birds, Reptiles) is a big rounded photo card of a real animal, name overlaid, matching the Pawsome reference exactly. This *is* the personality of the site; keep everything else (checkout, admin) calm and functional by comparison.
+**The category grid as a "meet the family" moment** — each category (Dogs,
+Cats, Birds, Fish) is a big sharp-edged photo card of a real animal, name
+overlaid on a gradient scrim. This is still the personality of the site; admin
+stays calm and functional by comparison.
+
+---
+
+<details>
+<summary>Original "Pawsome" direction (superseded, kept for history)</summary>
+
+Soft, warm, organic pet-brand feel — sage green fields, big friendly pet
+photography, rounded cards (16–24px radius), a clean category grid, pale
+sage/cream backgrounds with subtle blob/paw-print texture. Palette was
+`--sage:#A9C98E`, `--sage-deep:#6F9A55`, `--cream:#FBF9F3`,
+`--paw-brown:#8B5E3C`, `--coral:#F0824A`, `--ink:#22301D`,
+`--ink-soft:#5C6B54`. Display face was Fredoka/Baloo 2 for headings, Inter/Geist
+for body.
+
+</details>
 
 ---
 

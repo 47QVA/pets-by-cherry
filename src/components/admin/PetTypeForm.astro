@@ -12,15 +12,15 @@ const { action, categories, petType, error } = Astro.props;
 ---
 
 <form method="POST" action={action} class="max-w-lg space-y-4">
-	{error && <p class="rounded-xl bg-coral/10 p-3 text-sm text-ink-soft">{error}</p>}
+	{error && <p class="bg-accent/10 p-3 text-sm text-gray">{error}</p>}
 
 	<div>
-		<label class="mb-1 block text-sm text-ink-soft" for="category_id">Category</label>
+		<label class="mb-1 block text-sm text-gray" for="category_id">Category</label>
 		<select
 			id="category_id"
 			name="category_id"
 			required
-			class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+			class="w-full bg-white px-4 py-2.5 border border-black/10 focus:outline-none focus:ring-2 focus:ring-blue"
 		>
 			{categories.map((category) => (
 				<option value={category.id} selected={category.id === petType?.category_id}>
@@ -31,31 +31,31 @@ const { action, categories, petType, error } = Astro.props;
 	</div>
 
 	<div>
-		<label class="mb-1 block text-sm text-ink-soft" for="name">Name</label>
+		<label class="mb-1 block text-sm text-gray" for="name">Name</label>
 		<input
 			id="name"
 			name="name"
 			type="text"
 			required
 			value={petType?.name}
-			class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+			class="w-full bg-white px-4 py-2.5 border border-black/10 focus:outline-none focus:ring-2 focus:ring-blue"
 		/>
 	</div>
 
 	<div>
-		<label class="mb-1 block text-sm text-ink-soft" for="slug">
-			Slug <span class="text-ink-soft/70">(leave blank to auto-generate from name)</span>
+		<label class="mb-1 block text-sm text-gray" for="slug">
+			Slug <span class="text-gray/70">(leave blank to auto-generate from name)</span>
 		</label>
 		<input
 			id="slug"
 			name="slug"
 			type="text"
 			value={petType?.slug}
-			class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+			class="w-full bg-white px-4 py-2.5 border border-black/10 focus:outline-none focus:ring-2 focus:ring-blue"
 		/>
 	</div>
 
-	<button type="submit" class="rounded-full bg-sage-deep px-6 py-2.5 text-sm text-cream">
+	<button type="submit" class="bg-blue px-6 py-2.5 text-sm text-white">
 		{petType ? 'Save changes' : 'Create pet type'}
 	</button>
 </form>

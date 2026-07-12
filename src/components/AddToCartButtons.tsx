@@ -33,13 +33,13 @@ export default function AddToCartButtons({ kind, id, name, priceCents, photoUrl 
       <div class="mt-8 flex flex-col gap-3 sm:flex-row">
         <a
           href="/cart"
-          class="rounded-full bg-white px-6 py-4 text-center font-display text-lg text-ink-soft ring-1 ring-ink/10 sm:px-10"
+          class="bg-white px-6 py-4 text-center font-display text-lg text-gray border border-black/10 sm:px-10"
         >
           In your cart · View cart
         </a>
         <a
           href="/checkout"
-          class="rounded-full bg-coral px-6 py-4 text-center font-display text-lg text-cream sm:px-10"
+          class="bg-accent px-6 py-4 text-center font-display text-lg text-white sm:px-10"
         >
           Buy now
         </a>
@@ -52,14 +52,14 @@ export default function AddToCartButtons({ kind, id, name, priceCents, photoUrl 
       <button
         type="button"
         onClick={handleAdd}
-        class="rounded-full bg-sage-deep px-6 py-4 font-display text-lg text-cream sm:px-10"
+        class="bg-blue px-6 py-4 font-display text-lg text-white sm:px-10"
       >
         Add to cart
       </button>
       <button
         type="button"
         onClick={handleBuyNow}
-        class="rounded-full bg-coral px-6 py-4 font-display text-lg text-cream sm:px-10"
+        class="bg-accent px-6 py-4 font-display text-lg text-white sm:px-10"
       >
         Buy now
       </button>

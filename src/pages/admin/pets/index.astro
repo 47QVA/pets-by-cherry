@@ -8,17 +8,17 @@ const pets = await getAllPets(env.DB);
 ---
 
 <AdminLayout title="Pets">
-	<a href="/admin/pets/new" class="mb-4 inline-block rounded-full bg-coral px-5 py-2.5 text-sm text-cream">
+	<a href="/admin/pets/new" class="mb-4 inline-block bg-accent px-5 py-2.5 text-sm text-white">
 		New pet
 	</a>
 
 	{pets.length === 0 ? (
-		<p class="text-ink-soft">No pets yet.</p>
+		<p class="text-gray">No pets yet.</p>
 	) : (
-		<div class="overflow-x-auto rounded-2xl bg-white ring-1 ring-ink/10">
+		<div class="overflow-x-auto bg-white border border-black/10">
 			<table class="w-full text-left text-sm">
 				<thead>
-					<tr class="border-b border-ink/10 text-ink-soft">
+					<tr class="border-b border-black/10 text-gray">
 						<th class="px-4 py-3 font-medium">Name</th>
 						<th class="px-4 py-3 font-medium">Price</th>
 						<th class="px-4 py-3 font-medium">Stock</th>
@@ -29,16 +29,16 @@ const pets = await getAllPets(env.DB);
 				</thead>
 				<tbody>
 					{pets.map((pet) => (
-						<tr class="border-b border-ink/5 last:border-0">
+						<tr class="border-b border-black/5 last:border-0">
 							<td class="px-4 py-3 text-ink">{pet.name}</td>
-							<td class="px-4 py-3 text-ink-soft">{formatPrice(pet.price_cents)}</td>
-							<td class={`px-4 py-3 ${pet.stock_count <= 0 ? 'font-medium text-coral' : 'text-ink-soft'}`}>
+							<td class="px-4 py-3 text-gray">{formatPrice(pet.price_cents)}</td>
+							<td class={`px-4 py-3 ${pet.stock_count <= 0 ? 'font-medium text-accent' : 'text-gray'}`}>
 								{pet.stock_count}
 							</td>
-							<td class="hidden px-4 py-3 text-ink-soft sm:table-cell">{pet.featured ? 'Yes' : '—'}</td>
-							<td class="hidden px-4 py-3 text-ink-soft sm:table-cell">{pet.in_stock ? 'Yes' : 'No'}</td>
+							<td class="hidden px-4 py-3 text-gray sm:table-cell">{pet.featured ? 'Yes' : '—'}</td>
+							<td class="hidden px-4 py-3 text-gray sm:table-cell">{pet.in_stock ? 'Yes' : 'No'}</td>
 							<td class="px-4 py-3 text-right">
-								<a href={`/admin/pets/${pet.id}/edit`} class="text-sage-deep underline">
+								<a href={`/admin/pets/${pet.id}/edit`} class="text-blue underline">
 									Edit
 								</a>
 							</td>

@@ -1,26 +1,23 @@
 @import "tailwindcss";
-@import "@fontsource-variable/fredoka";
 @import "@fontsource-variable/inter";
 
 @theme {
-  --color-sage: #a9c98e;
-  --color-sage-deep: #6f9a55;
-  --color-cream: #ffffff;
-  --color-paw-brown: #8b5e3c;
-  --color-coral: #f0824a;
-  --color-ink: #22301d;
-  --color-ink-soft: #5c6b54;
+  --color-blue: #0071e3;
+  --color-accent: #f56300;
+  --color-surface: #f5f5f7;
+  --color-ink: #1d1d1f;
+  --color-gray: #6e6e73;
 
-  --font-display: 'Fredoka Variable', ui-rounded, sans-serif;
-  --font-body: 'Inter Variable', ui-sans-serif, sans-serif;
+  --font-display: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
 
-  --animate-card-in: card-in 0.5s ease-out both;
+  --animate-card-in: card-in 0.4s ease-out both;
 }
 
 @keyframes card-in {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
@@ -28,25 +25,23 @@
   }
 }
 
-/* Plain custom properties for non-utility CSS (blob backgrounds, etc.) */
+/* Plain custom properties for non-utility CSS */
 :root {
-  --sage: #a9c98e;
-  --sage-deep: #6f9a55;
-  --cream: #ffffff;
-  --paw-brown: #8b5e3c;
-  --coral: #f0824a;
-  --ink: #22301d;
-  --ink-soft: #5c6b54;
+  --blue: #0071e3;
+  --accent: #f56300;
+  --surface: #f5f5f7;
+  --ink: #1d1d1f;
+  --gray: #6e6e73;
 }
 
 body {
-  background-color: var(--cream);
+  background-color: #ffffff;
   color: var(--ink);
   font-family: var(--font-body);
 }
 
-/* Consistent, visible focus ring across custom-colored buttons/links */
+/* Consistent, visible focus ring across buttons/links */
 :focus-visible {
-  outline: 2px solid var(--coral);
+  outline: 2px solid var(--blue);
   outline-offset: 2px;
 }

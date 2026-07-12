@@ -17,35 +17,35 @@ const cards = [
 	{counts.lowStockCount > 0 && (
 		<a
 			href="/admin/products"
-			class="mb-4 block rounded-2xl bg-coral/10 p-4 text-sm text-ink"
+			class="mb-4 block bg-accent/10 p-4 text-sm text-ink"
 		>
-			<strong class="text-coral">{counts.lowStockCount}</strong> product(s) are low on stock (2 or fewer left). Review products.
+			<strong class="text-accent">{counts.lowStockCount}</strong> product(s) are low on stock (2 or fewer left). Review products.
 		</a>
 	)}
 
 	<div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
 		{cards.map((card) => (
-			<a href={card.href} class="rounded-2xl bg-white p-4 ring-1 ring-ink/10 hover:ring-sage-deep sm:p-6">
-				<p class="text-sm text-ink-soft">{card.label}</p>
+			<a href={card.href} class="bg-white p-4 border border-black/10 hover:ring-blue sm:p-6">
+				<p class="text-sm text-gray">{card.label}</p>
 				<p class="mt-1 font-display text-2xl text-ink sm:text-3xl">{card.value}</p>
 			</a>
 		))}
 	</div>
 
 	<div class="mt-8 flex flex-wrap gap-3">
-		<a href="/admin/categories/new" class="rounded-full bg-sage-deep px-5 py-2.5 text-sm text-cream">
+		<a href="/admin/categories/new" class="bg-blue px-5 py-2.5 text-sm text-white">
 			New category
 		</a>
-		<a href="/admin/pet-types/new" class="rounded-full bg-sage-deep px-5 py-2.5 text-sm text-cream">
+		<a href="/admin/pet-types/new" class="bg-blue px-5 py-2.5 text-sm text-white">
 			New pet type
 		</a>
-		<a href="/admin/pets/new" class="rounded-full bg-coral px-5 py-2.5 text-sm text-cream">
+		<a href="/admin/pets/new" class="bg-accent px-5 py-2.5 text-sm text-white">
 			New pet
 		</a>
-		<a href="/admin/product-types/new" class="rounded-full bg-sage-deep px-5 py-2.5 text-sm text-cream">
+		<a href="/admin/product-types/new" class="bg-blue px-5 py-2.5 text-sm text-white">
 			New product type
 		</a>
-		<a href="/admin/products/new" class="rounded-full bg-coral px-5 py-2.5 text-sm text-cream">
+		<a href="/admin/products/new" class="bg-accent px-5 py-2.5 text-sm text-white">
 			New product
 		</a>
 	</div>

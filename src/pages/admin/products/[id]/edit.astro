@@ -25,9 +25,9 @@ const error = Astro.url.searchParams.get('error') ?? undefined;
 		error={error}
 	/>
 
-	<div class="mt-8 max-w-2xl border-t border-ink/10 pt-6">
+	<div class="mt-8 max-w-2xl border-t border-black/10 pt-6">
 		<form method="POST" action={`/api/admin/products/${product.id}/delete`}>
-			<button type="submit" class="rounded-full bg-coral/10 px-5 py-2 text-sm text-coral">
+			<button type="submit" class="bg-accent/10 px-5 py-2 text-sm text-accent">
 				Delete product
 			</button>
 		</form>

@@ -1,5 +1,6 @@
 ---
 import type { Pet, PetTypeWithCategory } from '../../lib/db';
+import ImageField from './ImageField.astro';
 
 interface Props {
   action: string;
@@ -12,29 +13,29 @@ const { action, petTypes, pet, error } = Astro.props;
 const priceNaira = pet ? (pet.price_cents / 100).toFixed(2) : '';
 ---
 
-<form method="POST" action={action} class="max-w-2xl space-y-4">
-	{error && <p class="rounded-xl bg-coral/10 p-3 text-sm text-ink-soft">{error}</p>}
+<form method="POST" action={action} enctype="multipart/form-data" class="max-w-2xl space-y-4">
+	{error && <p class="bg-accent/10 p-3 text-sm text-gray">{error}</p>}
 
 	<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
 		<div>
-			<label class="mb-1 block text-sm text-ink-soft" for="name">Name</label>
+			<label class="mb-1 block text-sm text-gray" for="name">Name</label>
 			<input
 				id="name"
 				name="name"
 				type="text"
 				required
 				value={pet?.name}
-				class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+				class="w-full bg-white px-4 py-2.5 border border-black/10 focus:outline-none focus:ring-2 focus:ring-blue"
 			/>
 		</div>
 
 		<div>
-			<label class="mb-1 block text-sm text-ink-soft" for="pet_type_id">Pet type</label>
+			<label class="mb-1 block text-sm text-gray" for="pet_type_id">Pet type</label>
 			<select
 				id="pet_type_id"
 				name="pet_type_id"
 				required
-				class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+				class="w-full bg-white px-4 py-2.5 border border-black/10 focus:outline-none focus:ring-2 focus:ring-blue"
 			>
 				{petTypes.map((petType) => (
 					<option value={petType.id} selected={petType.id === pet?.pet_type_id}>
@@ -45,22 +46,22 @@ const priceNaira = pet ? (pet.price_cents / 100).toFixed(2) : '';
 		</div>
 
 		<div>
-			<label class="mb-1 block text-sm text-ink-soft" for="breed">Breed</label>
+			<label class="mb-1 block text-sm text-gray" for="breed">Breed</label>
 			<input
 				id="breed"
 				name="breed"
 				type="text"
 				value={pet?.breed ?? ''}
-				class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+				class="w-full bg-white px-4 py-2.5 border border-black/10 focus:outline-none focus:ring-2 focus:ring-blue"
 			/>
 		</div>
 
 		<div>
-			<label class="mb-1 block text-sm text-ink-soft" for="sex">Sex</label>
+			<label class="mb-1 block text-sm text-gray" for="sex">Sex</label>
 			<select
 				id="sex"
 				name="sex"
-				class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+				class="w-full bg-white px-4 py-2.5 border border-black/10 focus:outline-none focus:ring-2 focus:ring-blue"
 			>
 				<option value="" selected={!pet?.sex}>Unspecified</option>
 				<option value="Male" selected={pet?.sex === 'Male'}>Male</option>
@@ -69,31 +70,31 @@ const priceNaira = pet ? (pet.price_cents / 100).toFixed(2) : '';
 		</div>
 
 		<div>
-			<label class="mb-1 block text-sm text-ink-soft" for="age_label">Age</label>
+			<label class="mb-1 block text-sm text-gray" for="age_label">Age</label>
 			<input
 				id="age_label"
 				name="age_label"
 				type="text"
 				placeholder="e.g. 2 years"
 				value={pet?.age_label ?? ''}
-				class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+				class="w-full bg-white px-4 py-2.5 border border-black/10 focus:outline-none focus:ring-2 focus:ring-blue"
 			/>
 		</div>
 
 		<div>
-			<label class="mb-1 block text-sm text-ink-soft" for="weight_label">Weight</label>
+			<label class="mb-1 block text-sm text-gray" for="weight_label">Weight</label>
 			<input
 				id="weight_label"
 				name="weight_label"
 				type="text"
 				placeholder="e.g. 12 kg"
 				value={pet?.weight_label ?? ''}
-				class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+				class="w-full bg-white px-4 py-2.5 border border-black/10 focus:outline-none focus:ring-2 focus:ring-blue"
 			/>
 		</div>
 
 		<div>
-			<label class="mb-1 block text-sm text-ink-soft" for="price">Price (₦)</label>
+			<label class="mb-1 block text-sm text-gray" for="price">Price (₦)</label>
 			<input
 				id="price"
 				name="price"
@@ -102,23 +103,12 @@ const priceNaira = pet ? (pet.price_cents / 100).toFixed(2) : '';
 				min="0"
 				required
 				value={priceNaira}
-				class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+				class="w-full bg-white px-4 py-2.5 border border-black/10 focus:outline-none focus:ring-2 focus:ring-blue"
 			/>
 		</div>
 
 		<div>
-			<label class="mb-1 block text-sm text-ink-soft" for="photo_url">Photo URL</label>
-			<input
-				id="photo_url"
-				name="photo_url"
-				type="url"
-				value={pet?.photo_url ?? ''}
-				class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
-			/>
-		</div>
-
-		<div>
-			<label class="mb-1 block text-sm text-ink-soft" for="stock_count">Stock on hand</label>
+			<label class="mb-1 block text-sm text-gray" for="stock_count">Stock on hand</label>
 			<input
 				id="stock_count"
 				name="stock_count"
@@ -126,37 +116,39 @@ const priceNaira = pet ? (pet.price_cents / 100).toFixed(2) : '';
 				min="0"
 				required
 				value={pet?.stock_count ?? 1}
-				class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+				class="w-full bg-white px-4 py-2.5 border border-black/10 focus:outline-none focus:ring-2 focus:ring-blue"
 			/>
 		</div>
 	</div>
 
+	<ImageField currentUrl={pet?.photo_url ?? null} />
+
 	<div>
-		<label class="mb-1 block text-sm text-ink-soft" for="description">Description</label>
+		<label class="mb-1 block text-sm text-gray" for="description">Description</label>
 		<textarea
 			id="description"
 			name="description"
 			rows={3}
-			class="w-full rounded-xl bg-white px-4 py-2.5 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+			class="w-full bg-white px-4 py-2.5 border border-black/10 focus:outline-none focus:ring-2 focus:ring-blue"
 		>{pet?.description ?? ''}</textarea>
 	</div>
 
 	<div class="flex flex-wrap gap-6">
-		<label class="flex items-center gap-2 text-sm text-ink-soft">
+		<label class="flex items-center gap-2 text-sm text-gray">
 			<input type="checkbox" name="vaccinated" value="1" checked={!!pet?.vaccinated} />
 			Vaccinated
 		</label>
-		<label class="flex items-center gap-2 text-sm text-ink-soft">
+		<label class="flex items-center gap-2 text-sm text-gray">
 			<input type="checkbox" name="featured" value="1" checked={!!pet?.featured} />
 			Featured
 		</label>
-		<label class="flex items-center gap-2 text-sm text-ink-soft">
+		<label class="flex items-center gap-2 text-sm text-gray">
 			<input type="checkbox" name="in_stock" value="1" checked={pet ? !!pet.in_stock : true} />
 			In stock
 		</label>
 	</div>
 
-	<button type="submit" class="rounded-full bg-sage-deep px-6 py-2.5 text-sm text-cream">
+	<button type="submit" class="bg-blue px-6 py-2.5 text-sm text-white">
 		{pet ? 'Save changes' : 'Create pet'}
 	</button>
 </form>

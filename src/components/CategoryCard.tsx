@@ -9,7 +9,7 @@ export default function CategoryCard({ name, slug, photoUrl, index = 0 }: Catego
   return (
     <a
       href={`/category/${slug}`}
-      class="group relative block aspect-[4/5] overflow-hidden rounded-3xl bg-sage/30 shadow-sm transition-transform duration-300 ease-out motion-safe:animate-card-in hover:-translate-y-1 hover:shadow-lg"
+      class="group relative block aspect-[4/5] overflow-hidden bg-surface shadow-sm transition-transform duration-300 ease-out motion-safe:animate-card-in hover:-translate-y-1 hover:shadow-lg"
       style={{ animationDelay: `${index * 80}ms` }}
     >
       {photoUrl ? (
@@ -20,10 +20,10 @@ export default function CategoryCard({ name, slug, photoUrl, index = 0 }: Catego
           loading="lazy"
         />
       ) : (
-        <div class="h-full w-full bg-sage" />
+        <div class="h-full w-full bg-surface" />
       )}
       <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent p-4">
-        <span class="font-display text-xl text-cream drop-shadow-sm">{name}</span>
+        <span class="font-display text-xl text-white drop-shadow-sm">{name}</span>
       </div>
     </a>
   );

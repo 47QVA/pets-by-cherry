@@ -10,7 +10,7 @@ const error = Astro.url.searchParams.get('error') ?? undefined;
 
 <AdminLayout title="New pet">
 	{petTypes.length === 0 ? (
-		<p class="text-ink-soft">Create a category and pet type first.</p>
+		<p class="text-gray">Create a category and pet type first.</p>
 	) : (
 		<PetForm action="/api/admin/pets" petTypes={petTypes} error={error} />
 	)}

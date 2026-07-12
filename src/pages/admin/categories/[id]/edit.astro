@@ -23,15 +23,15 @@ const canDelete = petTypeCount === 0 && petCount === 0;
 <AdminLayout title={`Edit ${category.name}`}>
 	<CategoryForm action={`/api/admin/categories/${category.id}/update`} category={category} error={error} />
 
-	<div class="mt-8 max-w-lg border-t border-ink/10 pt-6">
+	<div class="mt-8 max-w-lg border-t border-black/10 pt-6">
 		{canDelete ? (
 			<form method="POST" action={`/api/admin/categories/${category.id}/delete`}>
-				<button type="submit" class="rounded-full bg-coral/10 px-5 py-2 text-sm text-coral">
+				<button type="submit" class="bg-accent/10 px-5 py-2 text-sm text-accent">
 					Delete category
 				</button>
 			</form>
 		) : (
-			<p class="text-sm text-ink-soft">
+			<p class="text-sm text-gray">
 				Can't delete: {petTypeCount} pet type(s) and {petCount} pet(s) still reference this category.
 				Move or remove them first.
 			</p>

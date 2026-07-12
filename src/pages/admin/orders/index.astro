@@ -9,17 +9,17 @@ const orders = await getAllOrders(env.DB);
 ---
 
 <AdminLayout title="Simulated orders">
-	<p class="mb-4 text-sm text-ink-soft">
+	<p class="mb-4 text-sm text-gray">
 		Read-only feed of demo checkouts. No real payment was ever processed for any of these.
 	</p>
 
 	{orders.length === 0 ? (
-		<p class="text-ink-soft">No simulated orders yet.</p>
+		<p class="text-gray">No simulated orders yet.</p>
 	) : (
-		<div class="overflow-x-auto rounded-2xl bg-white ring-1 ring-ink/10">
+		<div class="overflow-x-auto bg-white border border-black/10">
 			<table class="w-full text-left text-sm">
 				<thead>
-					<tr class="border-b border-ink/10 text-ink-soft">
+					<tr class="border-b border-black/10 text-gray">
 						<th class="px-4 py-3 font-medium">Receipt ref</th>
 						<th class="px-4 py-3 font-medium">Items</th>
 						<th class="px-4 py-3 font-medium">Total</th>
@@ -31,12 +31,12 @@ const orders = await getAllOrders(env.DB);
 					{orders.map((order) => {
 						const items: CartItem[] = JSON.parse(order.items_json);
 						return (
-							<tr class="border-b border-ink/5 last:border-0 align-top">
+							<tr class="border-b border-black/5 last:border-0 align-top">
 								<td class="px-4 py-3 text-ink">{order.fake_receipt_ref}</td>
-								<td class="px-4 py-3 text-ink-soft">{items.map((item) => item.name).join(', ')}</td>
-								<td class="px-4 py-3 text-ink-soft">{formatPrice(order.total_cents)}</td>
-								<td class="hidden px-4 py-3 text-ink-soft md:table-cell">{order.fake_delivery_address}</td>
-								<td class="hidden px-4 py-3 text-ink-soft sm:table-cell">{order.created_at}</td>
+								<td class="px-4 py-3 text-gray">{items.map((item) => item.name).join(', ')}</td>
+								<td class="px-4 py-3 text-gray">{formatPrice(order.total_cents)}</td>
+								<td class="hidden px-4 py-3 text-gray md:table-cell">{order.fake_delivery_address}</td>
+								<td class="hidden px-4 py-3 text-gray sm:table-cell">{order.created_at}</td>
 							</tr>
 						);
 					})}

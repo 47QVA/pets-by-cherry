@@ -8,17 +8,17 @@ const products = await getAllProducts(env.DB);
 ---
 
 <AdminLayout title="Products">
-	<a href="/admin/products/new" class="mb-4 inline-block rounded-full bg-coral px-5 py-2.5 text-sm text-cream">
+	<a href="/admin/products/new" class="mb-4 inline-block bg-accent px-5 py-2.5 text-sm text-white">
 		New product
 	</a>
 
 	{products.length === 0 ? (
-		<p class="text-ink-soft">No products yet.</p>
+		<p class="text-gray">No products yet.</p>
 	) : (
-		<div class="overflow-x-auto rounded-2xl bg-white ring-1 ring-ink/10">
+		<div class="overflow-x-auto bg-white border border-black/10">
 			<table class="w-full text-left text-sm">
 				<thead>
-					<tr class="border-b border-ink/10 text-ink-soft">
+					<tr class="border-b border-black/10 text-gray">
 						<th class="px-4 py-3 font-medium">Name</th>
 						<th class="px-4 py-3 font-medium">Price</th>
 						<th class="px-4 py-3 font-medium">Stock</th>
@@ -28,15 +28,15 @@ const products = await getAllProducts(env.DB);
 				</thead>
 				<tbody>
 					{products.map((product) => (
-						<tr class="border-b border-ink/5 last:border-0">
+						<tr class="border-b border-black/5 last:border-0">
 							<td class="px-4 py-3 text-ink">{product.name}</td>
-							<td class="px-4 py-3 text-ink-soft">{formatPrice(product.price_cents)}</td>
-							<td class={`px-4 py-3 ${product.stock_count <= 2 ? 'font-medium text-coral' : 'text-ink-soft'}`}>
+							<td class="px-4 py-3 text-gray">{formatPrice(product.price_cents)}</td>
+							<td class={`px-4 py-3 ${product.stock_count <= 2 ? 'font-medium text-accent' : 'text-gray'}`}>
 								{product.stock_count}
 							</td>
-							<td class="hidden px-4 py-3 text-ink-soft sm:table-cell">{product.in_stock ? 'Yes' : 'No'}</td>
+							<td class="hidden px-4 py-3 text-gray sm:table-cell">{product.in_stock ? 'Yes' : 'No'}</td>
 							<td class="px-4 py-3 text-right">
-								<a href={`/admin/products/${product.id}/edit`} class="text-sage-deep underline">
+								<a href={`/admin/products/${product.id}/edit`} class="text-blue underline">
 									Edit
 								</a>
 							</td>

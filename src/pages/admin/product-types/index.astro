@@ -7,17 +7,17 @@ const productTypes = await getAllProductTypes(env.DB);
 ---
 
 <AdminLayout title="Product types">
-	<a href="/admin/product-types/new" class="mb-4 inline-block rounded-full bg-sage-deep px-5 py-2.5 text-sm text-cream">
+	<a href="/admin/product-types/new" class="mb-4 inline-block bg-blue px-5 py-2.5 text-sm text-white">
 		New product type
 	</a>
 
 	{productTypes.length === 0 ? (
-		<p class="text-ink-soft">No product types yet.</p>
+		<p class="text-gray">No product types yet.</p>
 	) : (
-		<div class="overflow-x-auto rounded-2xl bg-white ring-1 ring-ink/10">
+		<div class="overflow-x-auto bg-white border border-black/10">
 			<table class="w-full text-left text-sm">
 				<thead>
-					<tr class="border-b border-ink/10 text-ink-soft">
+					<tr class="border-b border-black/10 text-gray">
 						<th class="px-4 py-3 font-medium">Category</th>
 						<th class="px-4 py-3 font-medium">Name</th>
 						<th class="hidden px-4 py-3 font-medium sm:table-cell">Slug</th>
@@ -26,12 +26,12 @@ const productTypes = await getAllProductTypes(env.DB);
 				</thead>
 				<tbody>
 					{productTypes.map((productType) => (
-						<tr class="border-b border-ink/5 last:border-0">
-							<td class="px-4 py-3 text-ink-soft">{productType.category_name}</td>
+						<tr class="border-b border-black/5 last:border-0">
+							<td class="px-4 py-3 text-gray">{productType.category_name}</td>
 							<td class="px-4 py-3 text-ink">{productType.name}</td>
-							<td class="hidden px-4 py-3 text-ink-soft sm:table-cell">{productType.slug}</td>
+							<td class="hidden px-4 py-3 text-gray sm:table-cell">{productType.slug}</td>
 							<td class="px-4 py-3 text-right">
-								<a href={`/admin/product-types/${productType.id}/edit`} class="text-sage-deep underline">
+								<a href={`/admin/product-types/${productType.id}/edit`} class="text-blue underline">
 									Edit
 								</a>
 							</td>

@@ -6,29 +6,29 @@ const error = Astro.url.searchParams.get('error');
 
 <Layout title="Admin login">
 	<section class="mx-auto max-w-sm py-10">
-		<h1 class="mb-6 font-display text-2xl text-ink sm:text-3xl">Admin</h1>
+		<h1 class="mb-6 font-display font-semibold tracking-tight text-2xl text-ink sm:text-3xl">Admin</h1>
 
 		{error && (
-			<p class="mb-4 rounded-xl bg-coral/10 p-3 text-sm text-ink-soft">
+			<p class="mb-4 bg-accent/10 p-3 text-sm text-gray">
 				Wrong password. Try again.
 			</p>
 		)}
 
 		<form method="POST" action="/api/admin/login" class="space-y-4">
 			<div>
-				<label class="mb-1 block text-sm text-ink-soft" for="password">Password</label>
+				<label class="mb-1 block text-sm text-gray" for="password">Password</label>
 				<input
 					id="password"
 					name="password"
 					type="password"
 					required
 					autofocus
-					class="w-full rounded-xl bg-cream px-4 py-3 ring-1 ring-ink/10 focus:outline-none focus:ring-2 focus:ring-sage-deep"
+					class="w-full bg-white px-4 py-3 border border-black/10 focus:outline-none focus:ring-2 focus:ring-blue"
 				/>
 			</div>
 			<button
 				type="submit"
-				class="w-full rounded-full bg-sage-deep px-6 py-3 font-display text-lg text-cream"
+				class="w-full bg-blue px-6 py-3 font-display text-lg text-white"
 			>
 				Log in
 			</button>

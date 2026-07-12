@@ -10,7 +10,7 @@ const error = Astro.url.searchParams.get('error') ?? undefined;
 
 <AdminLayout title="New product">
 	{productTypes.length === 0 ? (
-		<p class="text-ink-soft">Create a category and product type first.</p>
+		<p class="text-gray">Create a category and product type first.</p>
 	) : (
 		<ProductForm action="/api/admin/products" productTypes={productTypes} error={error} />
 	)}
